@@ -47,8 +47,9 @@ public class Car : MonoBehaviour
         {
             return;
         }
-        if (velocityVsUp < maxSpeed * 0.5f && accelerationInput < 0)
+        if (velocityVsUp < maxSpeed * -0.5f && accelerationInput < 0)
         {
+            Debug.Log("Engelliyorum");
             return;
         }
         if (rb.velocity.sqrMagnitude > maxSpeed * maxSpeed && accelerationInput > 0)
@@ -92,15 +93,15 @@ public class Car : MonoBehaviour
     public void SetInputVector(Vector2 inputVector) 
     {
         // Setting car properties according to inputs
-        accelerationInput = inputVector.x;
-        steeringInput = inputVector.y;
+        accelerationInput = inputVector.y;
+        steeringInput = inputVector.x;
     }
 
     void GetInputs()
     {
         // Getting move inputs
-        float xAxis = Input.GetAxis("Vertical");
-        float yAxis = Input.GetAxis("Horizontal");
+        float xAxis = Input.GetAxis("Horizontal");
+        float yAxis = Input.GetAxis("Vertical");
         SetInputVector(new Vector2(xAxis, yAxis));
     }
 
