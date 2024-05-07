@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class FollowCamera : MonoBehaviour
 {
-   [SerializeField]GameObject thingToFollow;
-    // Update is called once per frame
-    void LateUpdate()
+    [SerializeField] GameObject thingToFollow;
+    public float viewDistance = 10f;
+
+    void FixedUpdate()
     {
-        transform.position=thingToFollow.transform.position+new Vector3(0,0,-10);
+        transform.position = thingToFollow.transform.position + new Vector3(0, 0, -1 * viewDistance);
         
     }
 }
