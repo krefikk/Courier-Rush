@@ -131,4 +131,9 @@ public class Car : MonoBehaviour
         return false;
     }
 
+    public float GetVelocityMagnitude() 
+    {
+        return rb.velocity.magnitude;
+    }
+
 }
