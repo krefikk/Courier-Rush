@@ -104,4 +104,31 @@ public class Car : MonoBehaviour
         SetInputVector(new Vector2(xAxis, yAxis));
     }
 
+    float GetLateralVelocity() 
+    {
+        // Returns how fast the car going sideways
+        return Vector2.Dot(transform.right, rb.velocity);
+    }
+
+    public bool IsTireScreeching(out float lateralVelocity, out bool isBraking) 
+    {
+        lateralVelocity = GetLateralVelocity();
+        isBraking = false;
+
+        // Checks that is car breaking but still going forward
+        if (accelerationInput < 0 && velocityVsUp > 0) 
+        {
+            isBraking = true;
+            return true;
+        }
+
+        // Checks if lateral velocity is greater than a specific value
+        if (Mathf.Abs(lateralVelocity) > 2.0f) 
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 }
