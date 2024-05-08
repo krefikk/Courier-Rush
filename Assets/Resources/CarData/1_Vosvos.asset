@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carUniqueID: 0
   carUISprite: {fileID: 0}
-  carPrefab: {fileID: 0}
+  carPrefab: {fileID: 1653464735049385780, guid: 5eacac7dc1fff38408fd6831ee0fc513, type: 3}
