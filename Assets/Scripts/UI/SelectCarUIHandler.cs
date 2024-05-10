@@ -13,9 +13,27 @@ public class SelectCarUIHandler : MonoBehaviour
     bool changingCar = false; // Checks if car is changing at that moment
     CarUIHandler carUIHandler = null;
 
+    // CarData array to store cars to display
+    CarData[] carDatas;
+    int selectedCarIndex = 0;
+
     void Start()
     {
+        // Load all car datas
+        carDatas = Resources.LoadAll<CarData>("CarData/");
         SpawnCar(true);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) 
+        { 
+            OnClickedLeftArrow();
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            OnClickedRightArrow();
+        }
     }
 
     IEnumerator SpawnCar(bool isCarAppearOnRightSide) 
@@ -29,6 +47,7 @@ public class SelectCarUIHandler : MonoBehaviour
         // Create the new car prefab and play it's animation
         GameObject instatiatedCar = Instantiate(carPrefab, spawnOnTransform);
         carUIHandler = instatiatedCar.GetComponent<CarUIHandler>();
+        carUIHandler.SetUpCar(carDatas[selectedCarIndex]);
         carUIHandler.StartCarEntranceAnimation(isCarAppearOnRightSide);
         yield return new WaitForSeconds(0.25f); // 0.25 is animation's required time to complete
         changingCar = false;
@@ -36,13 +55,29 @@ public class SelectCarUIHandler : MonoBehaviour
 
     void OnClickedLeftArrow() 
     {
-        // Spawn a new car from right
-        SpawnCar(true);
+        if (!changingCar) 
+        {
+            selectedCarIndex--;
+            if (selectedCarIndex < 0)
+            {
+                selectedCarIndex = carDatas.Length - 1;
+            }
+            // Spawn a new car from right
+            StartCoroutine(SpawnCar(true));
+        }
     }
 
     void OnClickedRightArrow() 
     {
-        // Spawn a new car from left
-        SpawnCar(false);
+        if (!changingCar) 
+        {
+            selectedCarIndex++;
+            if (selectedCarIndex > carDatas.Length - 1)
+            {
+                selectedCarIndex = 0;
+            }
+            // Spawn a new car from left
+            StartCoroutine(SpawnCar(false));
+        }
     }
 }
