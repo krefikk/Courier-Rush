@@ -334,7 +334,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.5
+  m_FillAmount: 0.25
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -974,7 +974,7 @@ GameObject:
   - component: {fileID: 610311631}
   - component: {fileID: 610311633}
   m_Layer: 5
-  m_Name: BrakeStatBar
+  m_Name: AccStatBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -997,7 +997,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 657.1531, y: -230}
+  m_AnchoredPosition: {x: 638, y: -230}
   m_SizeDelta: {x: 536.4102, y: 53.5304}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &610311631
@@ -1050,8 +1050,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556ae73f347f6fe4ea9f787be5fae0b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximum: 100
-  current: 50
+  maximum: 30
+  current: 20
   mask: {fileID: 1445290477}
 --- !u!1 &624080979
 GameObject:
@@ -1314,7 +1314,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 657.1531, y: -90}
+  m_AnchoredPosition: {x: 632, y: -90}
   m_SizeDelta: {x: 536.4102, y: 53.5304}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &713123845
@@ -1367,8 +1367,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556ae73f347f6fe4ea9f787be5fae0b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximum: 100
-  current: 50
+  maximum: 1
+  current: 0.25
   mask: {fileID: 1465284917}
 --- !u!1 &797428498
 GameObject:
@@ -1406,7 +1406,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 657.1531, y: 205}
+  m_AnchoredPosition: {x: 634, y: 205}
   m_SizeDelta: {x: 536.4102, y: 53.5304}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &797428500
@@ -1459,7 +1459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556ae73f347f6fe4ea9f787be5fae0b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximum: 100
+  maximum: 220
   current: 50
   mask: {fileID: 840342760}
 --- !u!1 &840342757
@@ -1539,7 +1539,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.5
+  m_FillAmount: 0.22727273
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1564,7 +1564,7 @@ GameObject:
   - component: {fileID: 896576259}
   - component: {fileID: 896576258}
   m_Layer: 5
-  m_Name: Brakes
+  m_Name: Acceleration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1586,7 +1586,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 181, y: -215}
+  m_AnchoredPosition: {x: 281, y: -215}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &896576258
@@ -1609,7 +1609,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Brakes
+  m_text: Acceleration
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4e06697196a419b479ffc0f94006c432, type: 2}
   m_sharedMaterial: {fileID: -2068785396688183177, guid: 4e06697196a419b479ffc0f94006c432, type: 2}
@@ -1636,8 +1636,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75
-  m_fontSizeBase: 75
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1672,7 +1672,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -75.10327, w: 0}
+  m_margin: {x: -233.19696, y: 0, z: 26.92163, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1720,7 +1720,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 195, y: 215}
+  m_AnchoredPosition: {x: 243, y: 215}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &901208840
@@ -1770,8 +1770,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75
-  m_fontSizeBase: 75
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1806,7 +1806,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -58.864014, w: 0}
+  m_margin: {x: 0, y: 0, z: 1.5178223, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1854,7 +1854,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 57, y: 70}
+  m_AnchoredPosition: {x: 132, y: 70}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &942301164
@@ -1904,8 +1904,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75
-  m_fontSizeBase: 75
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1940,7 +1940,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -213.12964, w: 0}
+  m_margin: {x: 0, y: 0, z: -115.26892, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2209,6 +2209,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carPrefab: {fileID: 1653464735049385780, guid: 5eacac7dc1fff38408fd6831ee0fc513, type: 3}
   spawnOnTransform: {fileID: 1218428726}
+  speedStatBarObject: {fileID: 797428498}
+  gripStatBarObject: {fileID: 713123843}
+  durabilityStatBarObject: {fileID: 1637383055}
+  accelerationStatBarObject: {fileID: 610311629}
 --- !u!1 &1302223107
 GameObject:
   m_ObjectHideFlags: 0
@@ -2447,7 +2451,7 @@ GameObject:
   - component: {fileID: 1445290477}
   - component: {fileID: 1445290476}
   m_Layer: 5
-  m_Name: BrakeStat
+  m_Name: AccStat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2511,7 +2515,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.5
+  m_FillAmount: 0.6666667
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -2601,7 +2605,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.5
+  m_FillAmount: 0.25
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -2782,7 +2786,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 282, y: -75}
+  m_AnchoredPosition: {x: 311, y: -75}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1474831925
@@ -2832,8 +2836,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75
-  m_fontSizeBase: 75
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2868,7 +2872,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 20.297363, w: 0}
+  m_margin: {x: 0, y: 0, z: 59.85791, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3068,7 +3072,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 657.1531, y: 60}
+  m_AnchoredPosition: {x: 634, y: 60}
   m_SizeDelta: {x: 536.4102, y: 53.5304}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1637383057
@@ -3121,7 +3125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556ae73f347f6fe4ea9f787be5fae0b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximum: 100
+  maximum: 200
   current: 50
   mask: {fileID: 98770411}
 --- !u!1 &1749920430

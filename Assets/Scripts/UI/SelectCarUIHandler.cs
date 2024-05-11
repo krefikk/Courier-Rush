@@ -10,6 +10,16 @@ public class SelectCarUIHandler : MonoBehaviour
     [Header("Spawn On")]
     public Transform spawnOnTransform; // Parent object that has a mask linked to it
 
+    [Header("Car Properties")]
+    public GameObject speedStatBarObject;
+    public GameObject gripStatBarObject;
+    public GameObject durabilityStatBarObject;
+    public GameObject accelerationStatBarObject;
+    StatBar speedBar;
+    StatBar durabilityBar;
+    StatBar gripBar;
+    StatBar accelerationBar;
+
     bool changingCar = false; // Checks if car is changing at that moment
     CarUIHandler carUIHandler = null;
 
@@ -21,18 +31,24 @@ public class SelectCarUIHandler : MonoBehaviour
     {
         // Load all car datas
         carDatas = Resources.LoadAll<CarData>("CarData/");
-        SpawnCar(true);
+        // Initialize statistic bars
+        speedBar = speedStatBarObject.GetComponent<StatBar>();
+        durabilityBar = durabilityStatBarObject.GetComponent<StatBar>();
+        gripBar = gripStatBarObject.GetComponent<StatBar>();
+        accelerationBar = accelerationStatBarObject.GetComponent<StatBar>();
+        // Display first car
+        StartCoroutine(SpawnCar(true));
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow)) 
         { 
-            OnClickedLeftArrow();
+            OnClickedRightArrow();
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            OnClickedRightArrow();
+            OnClickedLeftArrow();
         }
     }
 
@@ -47,7 +63,7 @@ public class SelectCarUIHandler : MonoBehaviour
         // Create the new car prefab and play it's animation
         GameObject instatiatedCar = Instantiate(carPrefab, spawnOnTransform);
         carUIHandler = instatiatedCar.GetComponent<CarUIHandler>();
-        carUIHandler.SetUpCar(carDatas[selectedCarIndex]);
+        carUIHandler.SetUpCar(carDatas[selectedCarIndex], speedBar, accelerationBar, gripBar, durabilityBar);
         carUIHandler.StartCarEntranceAnimation(isCarAppearOnRightSide);
         yield return new WaitForSeconds(0.25f); // 0.25 is animation's required time to complete
         changingCar = false;

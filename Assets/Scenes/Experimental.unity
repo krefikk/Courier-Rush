@@ -52333,6 +52333,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car
       objectReference: {fileID: 0}
+    - target: {fileID: 6727912398310460845, guid: 39402f680f351fe46abb1ed5bccd29c6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7949283595436787357, guid: 39402f680f351fe46abb1ed5bccd29c6, type: 3}
+      propertyPath: grip
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7949283595436787357, guid: 39402f680f351fe46abb1ed5bccd29c6, type: 3}
+      propertyPath: maxSpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8279909184070839905, guid: 39402f680f351fe46abb1ed5bccd29c6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.14

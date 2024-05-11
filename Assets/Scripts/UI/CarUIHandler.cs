@@ -8,6 +8,7 @@ public class CarUIHandler : MonoBehaviour
 
     [Header("Car Details")]
     public Image carImage;
+    
 
     // Components
     Animator anim = null;
@@ -21,10 +22,18 @@ public class CarUIHandler : MonoBehaviour
     void Start()
     {
         
+       
     }
 
-    public void SetUpCar(CarData carData) 
+    public void SetUpCar(CarData carData, StatBar speed, StatBar acc, StatBar grip, StatBar dura) 
     {
+        // Changing statistic bars
+        Car car = carData.CarPrefab.GetComponent<Car>();
+        speed.current = car.maxSpeedOnRealWorld;
+        acc.current = car.accelerationFactor;
+        grip.current = 1 / car.antiGrip;
+        dura.current = car.carHealth;
+        // Changing car sprite on screen
         carImage.sprite = carData.CarUISprite;
     }
 
