@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
-    bool hasSavedGame = false;
+    bool hasSavedGame = true;
     List<int> carIDs;
     int day = 1;
     int money = 0;

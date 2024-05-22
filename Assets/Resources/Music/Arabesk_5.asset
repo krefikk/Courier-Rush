@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c161e6af29f76ca48a406a15370a7c30, type: 3}
+  m_Name: Arabesk_5
+  m_EditorClassIdentifier: 
+  musicID: 14
+  channelNumber: 2
+  music: {fileID: 8300000, guid: cafef7b787b7d7141b5e65ca8e46c95a, type: 3}
+  musicName: "Hat\u0131ran Yeter"
+  artist: Ferdi Tayfur
+  seconds: 290

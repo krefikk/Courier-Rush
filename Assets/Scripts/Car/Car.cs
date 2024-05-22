@@ -38,7 +38,6 @@ public class Car : MonoBehaviour
     {
         // Game loop for general functions
         GetInputs();
-        Debug.Log(GetSpeed());
     }
 
     void FixedUpdate()

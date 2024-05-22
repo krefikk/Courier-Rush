@@ -108,6 +108,48 @@ public class MainMenuManager : MonoBehaviour
         githubButton.interactable = true;
     }
 
+    IEnumerator EnterAnimation()    
+    {
+        // Making buttons uninteractable during exit animation
+        continueBB.interactable = false;
+        newGameButton.interactable = false;
+        settingsButton.interactable = false;
+        creditsButton.interactable = false;
+        htpButton.interactable = false;
+        exitButton.interactable = false;
+        itchButton.interactable = false;
+        githubButton.interactable = false;
+        // Playing exit animations
+        itchio.Play("itchioEnter");
+        yield return new WaitForSeconds(0.25f);
+        github.Play("githubEnter");
+        yield return new WaitForSeconds(0.25f);
+        exit.Play("exitEnter");
+        yield return new WaitForSeconds(0.25f);
+        howToPlay.Play("htpEnter");
+        yield return new WaitForSeconds(0.25f);
+        credits.Play("creditsEnter");
+        yield return new WaitForSeconds(0.25f);
+        settings.Play("settingsEnter");
+        yield return new WaitForSeconds(0.25f);
+        continueButton.Play("continueEnter");
+        yield return new WaitForSeconds(0.25f);
+        newGame.Play("newGameEnter");
+        yield return new WaitForSeconds(0.25f);
+        // Making buttons interactable again after exit animation
+        if (GameManager.gameManager.HasSavedGame())
+        {
+            continueBB.interactable = true;
+        }
+        newGameButton.interactable = true;
+        settingsButton.interactable = true;
+        creditsButton.interactable = true;
+        htpButton.interactable = true;
+        exitButton.interactable = true;
+        itchButton.interactable = true;
+        githubButton.interactable = true;
+    }
+
     public void OnClickNewGame() 
     {
         if (GameManager.gameManager.HasSavedGame()) 
@@ -147,19 +189,17 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnClickItchio() 
     {
-        StartCoroutine(ExitAnimation());
         Application.OpenURL("https://github.com/krefikk/Courier-Rush");
     }
 
     public void OnClickGithub() 
     {
-        StartCoroutine(ExitAnimation());
         Application.OpenURL("https://github.com/krefikk/Courier-Rush");
     }
 
     public void SaveWarning() 
     {
-        saveWarning.transform.position = new Vector3(0, -1300, 0);
+        saveWarning.transform.position = new Vector3(960, -1300, 0);
         saveWarning.SetActive(true);
         saveContinue.interactable = true;
         saveCancel.interactable = true;
