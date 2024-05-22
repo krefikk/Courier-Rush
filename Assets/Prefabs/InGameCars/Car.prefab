@@ -699,7 +699,7 @@ GameObject:
   - component: {fileID: 2867033604373374604}
   m_Layer: 0
   m_Name: Car
-  m_TagString: Untagged
+  m_TagString: PlayerCar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -787,6 +787,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92bdeb3d3a01b414b8d9f513ea0e5030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  accelerationFactor: 20
+  turnFactor: 3.5
+  maxSpeedOnRealWorld: 180
+  antiGrip: 16
+  carHealth: 100
+  maxPackage: 1
 --- !u!50 &7226610791559476175
 Rigidbody2D:
   serializedVersion: 4

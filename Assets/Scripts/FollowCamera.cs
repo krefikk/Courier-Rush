@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class FollowCamera : MonoBehaviour
 {
-    [SerializeField] GameObject thingToFollow;
+    GameObject thingToFollow;
     public float viewDistance = 10f;
+
+    private void Start()
+    {
+        thingToFollow = GameObject.FindGameObjectWithTag("PlayerCar");
+    }
 
     void FixedUpdate()
     {

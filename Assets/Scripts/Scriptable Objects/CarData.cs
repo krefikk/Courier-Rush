@@ -8,6 +8,7 @@ public class CarData : ScriptableObject
     [SerializeField] private int carUniqueID = 0;
     [SerializeField] private Sprite carUISprite;
     [SerializeField] private GameObject carPrefab;
+    [SerializeField] private int price;
 
     public int CarUniqueID 
     {
@@ -22,5 +23,10 @@ public class CarData : ScriptableObject
     public GameObject CarPrefab
     {
         get { return carPrefab; }
+    }
+
+    public int Price
+    {
+        get { return price; }
     }
 }

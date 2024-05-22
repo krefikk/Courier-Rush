@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,12 +20,6 @@ public class CarUIHandler : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
     }
 
-    void Start()
-    {
-        
-       
-    }
-
     public void SetUpCar(CarData carData, StatBar speed, StatBar acc, StatBar grip, StatBar dura) 
     {
         // Changing statistic bars
@@ -35,6 +30,10 @@ public class CarUIHandler : MonoBehaviour
         dura.current = car.carHealth;
         // Changing car sprite on screen
         carImage.sprite = carData.CarUISprite;
+        // Setting the buy value on button
+        GameObject buyButton = GameObject.FindGameObjectWithTag("BuyButton");
+        TextMeshProUGUI buyButtonValue = buyButton.GetComponentInChildren<TextMeshProUGUI>();
+        buyButtonValue.text = carData.Price.ToString();
     }
 
     public void StartCarEntranceAnimation(bool carAppearOnRightSide) 
