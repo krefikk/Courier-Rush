@@ -67,11 +67,8 @@ public class RadioManager : MonoBehaviour
         artistName.text = "";
         songName.text = "";
         slider.value = 1;
-        startingSongForChannel0 = Random.Range(0, 6);
-        startingSongForChannel1 = Random.Range(0, 5);
-        startingSongForChannel2 = Random.Range(0, 5);
-        startingSongForChannel3 = Random.Range(0, 5);
-        currentChannelInfo = CalculateStartMusic();
+        CacheStartMusics();
+        StartCoroutine(SetupInitialMusic());
     }
 
     private void Update()
@@ -79,16 +76,34 @@ public class RadioManager : MonoBehaviour
         elapsedTime += Time.deltaTime;
         if (lastChannelNumber != currentChannelNumber)
         {
-            currentChannelInfo = CalculateStartMusic();
+            StartCoroutine(OnChannelChangeCO());
             lastChannelNumber = currentChannelNumber;
-            PlayCurrentChannel();
         }
-        // Check if the current song has finished playing
+
         if (!radio.isPlaying && radio.clip != null)
         {
             AdvanceToNextTrack();
         }
-        UpdateSlider();   
+        UpdateSlider();
+    }
+
+    IEnumerator SetupInitialMusic()
+    {
+        yield return new WaitForEndOfFrame(); // Defer to the end of the frame
+        currentChannelInfo = CalculateStartMusic();
+    }
+
+    void CacheStartMusics()
+    {
+        float startTime = Time.realtimeSinceStartup;
+
+        startingSongForChannel0 = Random.Range(0, channel1.Count);
+        startingSongForChannel1 = Random.Range(0, channel2.Count);
+        startingSongForChannel2 = Random.Range(0, channel3.Count);
+        startingSongForChannel3 = Random.Range(0, channel4.Count);
+
+        float endTime = Time.realtimeSinceStartup;
+        Debug.Log($"CacheStartMusics took {endTime - startTime} seconds");
     }
 
     void UpdateSlider() 
@@ -132,24 +147,23 @@ public class RadioManager : MonoBehaviour
         PlayCurrentChannel();
     }
 
-    public void OnNextChannel() 
+    public void OnNextChannel()
     {
-        if (currentChannelNumber != 4)
-        {
-            currentChannelNumber++;
-        }
-        else { currentChannelNumber = 0; }
-        currentChannelInfo = CalculateStartMusic();
+        currentChannelNumber = (currentChannelNumber + 1) % (channelCount + 1);
+        StartCoroutine(OnChannelChangeCO());
     }
 
-    public void OnPreviousChannel() 
+    public void OnPreviousChannel()
     {
-        if (currentChannelNumber != 0)
-        {
-            currentChannelNumber--;
-        }
-        else { currentChannelNumber = 4; }
+        currentChannelNumber = (currentChannelNumber - 1 + channelCount + 1) % (channelCount + 1);
+        StartCoroutine(OnChannelChangeCO());
+    }
+
+    IEnumerator OnChannelChangeCO()
+    {
+        yield return new WaitForEndOfFrame();
         currentChannelInfo = CalculateStartMusic();
+        PlayCurrentChannel();
     }
 
     void DisplayCurrentMusic(RadioMusic radioMusic) 
@@ -170,6 +184,8 @@ public class RadioManager : MonoBehaviour
 
     void PlayCurrentChannel()
     {
+        float startTime = Time.realtimeSinceStartup;
+
         RadioMusic currentRadioMusic = null;
         if (currentChannelInfo != null)
         {
@@ -208,63 +224,67 @@ public class RadioManager : MonoBehaviour
             }
             DisplayCurrentMusic(currentRadioMusic);
         }
+
+        float endTime = Time.realtimeSinceStartup;
+        Debug.Log($"PlayCurrentChannel took {endTime - startTime} seconds");
     }
 
-    float[] CalculateStartMusic() // Returns starting music index and exact time (ex. 2, 123)
+    float[] CalculateStartMusic()
     {
         float[] returnArray = new float[2];
         float startingTime = elapsedTime;
-        int tekrarCount = 0;
-        List<RadioMusic> currentChannel = null;
+        int startMusicIndex = 0;
         int startingSong = 0;
+        List<RadioMusic> currentChannel = GetCurrentChannel();
 
-        switch (currentChannelNumber)
+        if (currentChannel == null)
         {
-            case 0:
-                currentChannel = channel1;
-                startingSong = startingSongForChannel0;
-                break;
-            case 1:
-                currentChannel = channel2;
-                startingSong = startingSongForChannel1;
-                break;
-            case 2:
-                currentChannel = channel3;
-                startingSong = startingSongForChannel2;
-                break;
-            case 3:
-                currentChannel = channel4;
-                startingSong = startingSongForChannel3;
-                break;
-            case 4:
-                returnArray[0] = 0;
-                returnArray[1] = 0;
-                return returnArray;
+            returnArray[0] = 0;
+            returnArray[1] = 0;
+            return returnArray;
         }
 
-        for (int i = startingSong; i < currentChannel.Count; i++)
+        startingSong = GetStartingSongForChannel(currentChannelNumber);
+
+        for (int i = 0; i < currentChannel.Count; i++)
         {
-            if (startingTime >= currentChannel[i].Seconds)
-            {
-                startingTime -= currentChannel[i].Seconds;
-                tekrarCount++;
-            }
-            else
+            if (startingTime < currentChannel[startingSong].Seconds)
             {
                 break;
             }
-
-            if (i == currentChannel.Count - 1 && startingTime >= 0)
-            {
-                i = -1; // Restart loop
-            }
+            startingTime -= currentChannel[startingSong].Seconds;
+            startingSong = (startingSong + 1) % currentChannel.Count;
         }
 
-        int startMusicIndex = (startingSong + tekrarCount) % currentChannel.Count;
+        startMusicIndex = startingSong;
         returnArray[0] = startMusicIndex;
         returnArray[1] = startingTime;
 
         return returnArray;
+    }
+
+    List<RadioMusic> GetCurrentChannel()
+    {
+        switch (currentChannelNumber)
+        {
+            case 0: return channel1;
+            case 1: return channel2;
+            case 2: return channel3;
+            case 3: return channel4;
+            default: return null;
+        }
+    }
+
+    int GetStartingSongForChannel(int channelNumber)
+    {
+        switch (channelNumber)
+        {
+            case 0: return startingSongForChannel0;
+            case 1: return startingSongForChannel1;
+            case 2: return startingSongForChannel2;
+            case 3: return startingSongForChannel3;
+            default: return 0;
+        }
     }
 
 }

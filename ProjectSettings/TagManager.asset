@@ -10,6 +10,7 @@ TagManager:
   - SpawnPoint
   - BuyButton
   - PlayerCar
+  - Road
   layers:
   - Default
   - TransparentFX

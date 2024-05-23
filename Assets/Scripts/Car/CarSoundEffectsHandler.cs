@@ -45,7 +45,7 @@ public class CarSoundEffectsHandler : MonoBehaviour
         // Tires are screeching
         if (car.IsTireScreeching(out float lateralVelocity, out bool isBraking))
         {
-            if (isBraking)
+            if (isBraking || (car.GetBraking() && car.GetSpeed() > 5))
             {
                 // Car is braking
                 tireScreechingAudioSource.volume = Mathf.Lerp(tireScreechingAudioSource.volume, 1.0f, Time.deltaTime * 10f);

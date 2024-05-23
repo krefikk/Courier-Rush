@@ -14,6 +14,7 @@ public class Car : MonoBehaviour
     public float antiGrip = 16; // If get's bigger, grip decreases
     public float carHealth = 100;
     public float maxPackage = 1;
+    bool braking = false;
 
     [Header("Local Variables")]
     float accelerationInput = 0;
@@ -69,8 +70,14 @@ public class Car : MonoBehaviour
         {
             return;
         }
-        // Applying drag to the car
-        if (accelerationInput == 0)
+
+        if (braking)
+        {
+            // Apply a strong drag to simulate braking
+            rb.drag = 16.0f / antiGrip;
+            return;
+        }
+        else if (accelerationInput == 0)
         {
             rb.drag = Mathf.Lerp(rb.drag, 3.0f, Time.fixedDeltaTime * 3);
         }
@@ -116,6 +123,8 @@ public class Car : MonoBehaviour
         float xAxis = Input.GetAxis("Horizontal");
         float yAxis = Input.GetAxis("Vertical");
         SetInputVector(new Vector2(xAxis, yAxis));
+        // Getting brake input
+        braking = Input.GetKey(KeyCode.Space);
     }
 
     float GetLateralVelocity()
@@ -128,6 +137,8 @@ public class Car : MonoBehaviour
     {
         lateralVelocity = GetLateralVelocity();
         isBraking = false;
+
+        if (braking) { return true; }
 
         // Checks that is car breaking but still going forward
         if (accelerationInput < 0 && velocityVsUp > 0)
@@ -153,6 +164,11 @@ public class Car : MonoBehaviour
     public float GetVelocityMagnitude()
     {
         return rb.velocity.magnitude;
+    }
+
+    public bool GetBraking() 
+    {
+        return braking;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
