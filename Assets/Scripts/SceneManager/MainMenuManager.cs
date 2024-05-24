@@ -152,15 +152,19 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnClickNewGame() 
     {
-        if (GameManager.gameManager.HasSavedGame()) 
+        if (GameManager.gameManager.HasSavedGame())
         {
             SaveWarning();
+        }
+        else 
+        {
+            SceneManager.LoadScene("Garage");
         }
     }
     public void OnClickContinue() 
     {
         StartCoroutine(ExitAnimation());
-        SceneManager.LoadScene("MainGame");
+        SceneManager.LoadScene("Garage");
     }
 
     public void OnClickSettings() 
@@ -256,6 +260,6 @@ public class MainMenuManager : MonoBehaviour
         saveWarning.SetActive(false);
         StartCoroutine(ExitAnimation());
         // Delete the save files and create new
-        SceneManager.LoadScene("MainGame");
+        SceneManager.LoadScene("Garage");
     }
 }

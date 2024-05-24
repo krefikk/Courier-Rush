@@ -12,6 +12,7 @@ public class Car : MonoBehaviour
     public float maxSpeedOnRealWorld = 180; // Real speed
     float maxSpeedFactor;
     public float antiGrip = 16; // If get's bigger, grip decreases
+    float maxCarHealth = 100;
     public float carHealth = 100;
     public float maxPackage = 1;
     bool braking = false;
@@ -66,7 +67,7 @@ public class Car : MonoBehaviour
         {
             return;
         }
-        if (GetSpeed() >= maxSpeedOnRealWorld) 
+        if (GetSpeed() >= maxSpeedOnRealWorld)
         {
             return;
         }
@@ -156,7 +157,7 @@ public class Car : MonoBehaviour
         return false;
     }
 
-    public float GetSpeed() 
+    public float GetSpeed()
     {
         return Mathf.Pow(rb.velocity.x, 2) + Mathf.Pow(rb.velocity.y, 2);
     }
@@ -166,15 +167,36 @@ public class Car : MonoBehaviour
         return rb.velocity.magnitude;
     }
 
-    public bool GetBraking() 
+    public bool GetBraking()
     {
         return braking;
+    }
+
+    public float getCurrentHealth()
+    {
+        return carHealth;
+    }
+
+    public float GetMaxHealth()
+    {
+        return maxCarHealth;
+    }
+
+    public float GetDamage()
+    {
+        return maxCarHealth - carHealth;
+    }
+
+    public void SetDamage(float value)
+    {
+        carHealth = maxCarHealth - value;
+        if (carHealth < 0) { carHealth = 0; }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         float damage = GetSpeed() / 6;
-        if (damage <= 3) 
+        if (damage <= 3)
         {
             damage = 0;
         }

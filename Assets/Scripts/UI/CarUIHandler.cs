@@ -32,8 +32,11 @@ public class CarUIHandler : MonoBehaviour
         carImage.sprite = carData.CarUISprite;
         // Setting the buy value on button
         GameObject buyButton = GameObject.FindGameObjectWithTag("BuyButton");
-        TextMeshProUGUI buyButtonValue = buyButton.GetComponentInChildren<TextMeshProUGUI>();
-        buyButtonValue.text = carData.Price.ToString();
+        if (buyButton != null) 
+        {
+            TextMeshProUGUI buyButtonValue = buyButton.GetComponentInChildren<TextMeshProUGUI>();
+            buyButtonValue.text = carData.Price.ToString();
+        }
     }
 
     public void StartCarEntranceAnimation(bool carAppearOnRightSide) 

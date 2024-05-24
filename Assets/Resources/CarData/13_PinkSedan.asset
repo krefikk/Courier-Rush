@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2743a04cfe36154a8db182758b72f76, type: 3}
+  m_Name: 13_PinkSedan
+  m_EditorClassIdentifier: 
+  carUniqueID: 12
+  carUISprite: {fileID: 21300000, guid: 021d2a12abcf9fe4a8a6d3ceedaefb52, type: 3}
+  carPrefab: {fileID: 3842953404081026869, guid: fe5f3d64ac40d3b4c823fe942b05f9a6, type: 3}
+  price: 2900

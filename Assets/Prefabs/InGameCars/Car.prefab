@@ -788,10 +788,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accelerationFactor: 20
-  turnFactor: 3.5
+  turnFactor: 4
   maxSpeedOnRealWorld: 180
   antiGrip: 16
-  carHealth: 100
+  carHealth: 120
   maxPackage: 1
 --- !u!50 &7226610791559476175
 Rigidbody2D:

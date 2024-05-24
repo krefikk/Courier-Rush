@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2743a04cfe36154a8db182758b72f76, type: 3}
+  m_Name: 7_WhiteSedan1
+  m_EditorClassIdentifier: 
+  carUniqueID: 6
+  carUISprite: {fileID: 21300000, guid: 4da4d2858341b694ab6f318351e9595e, type: 3}
+  carPrefab: {fileID: 3842953404081026869, guid: 525fad40f98f8af4f903721c4c69b70d, type: 3}
+  price: 2100

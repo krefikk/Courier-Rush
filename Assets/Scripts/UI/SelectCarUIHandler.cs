@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SelectCarUIHandler : MonoBehaviour
 {
@@ -51,10 +53,6 @@ public class SelectCarUIHandler : MonoBehaviour
         {
             OnClickedLeftArrow();
         }
-        if (Input.GetKeyDown(KeyCode.Z)) 
-        {
-            OnSelectCar();
-        }
     }
 
     IEnumerator SpawnCar(bool isCarAppearOnRightSide) 
@@ -72,6 +70,7 @@ public class SelectCarUIHandler : MonoBehaviour
         carUIHandler.StartCarEntranceAnimation(isCarAppearOnRightSide);
         yield return new WaitForSeconds(0.25f); // 0.25 is animation's required time to complete
         changingCar = false;
+        CheckCarWasBought();
     }
 
     public void OnClickedLeftArrow() 
@@ -102,10 +101,37 @@ public class SelectCarUIHandler : MonoBehaviour
         }
     }
 
-    public void OnSelectCar() 
+    public void OnClickBuy() 
     {
-        PlayerPrefs.SetInt("SelectedCarID", carDatas[selectedCarIndex].CarUniqueID);
-        PlayerPrefs.Save();
-        SceneManager.LoadScene("MainGame");
+        if (GameManager.gameManager.GetMoney() >= carDatas[selectedCarIndex].Price)
+        {
+            GameManager.gameManager.AddCar(carDatas[selectedCarIndex]);
+            CheckCarWasBought();
+        }
+        else 
+        { 
+            // money hud'ýný titreþtir ve bir ses oynat
+        }
     }
+
+    public void CheckCarWasBought() // Runs each time car on the screen changes
+    {
+        GameObject buyButton = GameObject.FindGameObjectWithTag("BuyButton");
+        if (buyButton != null) 
+        {
+            Button button = buyButton.GetComponent<Button>();
+            TextMeshProUGUI buyButtonValue = buyButton.GetComponentInChildren<TextMeshProUGUI>();
+            if (GameManager.gameManager.CheckForCar(carDatas[selectedCarIndex].CarUniqueID))
+            {
+                buyButtonValue.text = "In Garage";
+                button.interactable = false;
+            }
+            else
+            {
+                button.interactable = true;
+            }
+        }      
+    }
+
+    
 }
