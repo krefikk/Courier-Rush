@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 26_LamboRed
   m_EditorClassIdentifier: 
   carUniqueID: 25
-  carUISprite: {fileID: 21300000, guid: 676f2d2975cd11646b20416bfc8b55df, type: 3}
+  carUISprite: {fileID: 21300000, guid: 6ddf02606a21e5143a4edc5897846921, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: 81430a24942b47e499b85be674ff1bc7, type: 3}
   price: 5150

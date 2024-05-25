@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 32_GreenPorshe2
   m_EditorClassIdentifier: 
   carUniqueID: 31
-  carUISprite: {fileID: 21300000, guid: 6c1ba44b6bf891844b9e750d2b368221, type: 3}
+  carUISprite: {fileID: 21300000, guid: 06f2eabdab62b4248844effb8b65127f, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: 24feeb0410a4fc848b6f35b6ea402bfa, type: 3}
   price: 6000

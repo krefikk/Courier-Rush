@@ -80,7 +80,7 @@ public class Car : MonoBehaviour
         }
         else if (accelerationInput == 0)
         {
-            rb.drag = Mathf.Lerp(rb.drag, 3.0f, Time.fixedDeltaTime * 3);
+            rb.drag = Mathf.Lerp(rb.drag, 3.0f, Time.fixedDeltaTime);
         }
         else
         {

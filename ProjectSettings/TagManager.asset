@@ -12,6 +12,7 @@ TagManager:
   - PlayerCar
   - Road
   - ConditionStatBar
+  - DropPoint
   layers:
   - Default
   - TransparentFX

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 40_OrangeUltimate
   m_EditorClassIdentifier: 
   carUniqueID: 39
-  carUISprite: {fileID: 21300000, guid: 879e1515582570741aeb703903aac468, type: 3}
+  carUISprite: {fileID: 21300000, guid: 2e37ef84edc864244aa310d4cc9687ef, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: 4e82e0a2a27f22d47b30804cdaca89e6, type: 3}
   price: 7500

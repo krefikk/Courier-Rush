@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 38_YellowFerrari
   m_EditorClassIdentifier: 
   carUniqueID: 37
-  carUISprite: {fileID: 21300000, guid: 8ba6132c7f2f8a54983b724eb3256607, type: 3}
+  carUISprite: {fileID: 21300000, guid: b45a644c8c315bc4a9557d506542623c, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: 09db2f3a39f69d943a46e981ae7d5437, type: 3}
   price: 7150

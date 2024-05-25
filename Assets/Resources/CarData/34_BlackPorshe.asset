@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 34_BlackPorshe
   m_EditorClassIdentifier: 
   carUniqueID: 33
-  carUISprite: {fileID: 21300000, guid: a1ea9ceb241757b44b9cc0f1d1d242dd, type: 3}
+  carUISprite: {fileID: 21300000, guid: b951eba24ac67a34988661e1f649db79, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: 87bc651afd60ddd4bae0d061ee7ae8aa, type: 3}
   price: 6350

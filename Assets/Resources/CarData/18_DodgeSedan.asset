@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 18_DodgeSedan
   m_EditorClassIdentifier: 
   carUniqueID: 17
-  carUISprite: {fileID: 21300000, guid: 6a3377162bb574dd48fd5b0b7da7c6b2, type: 3}
+  carUISprite: {fileID: 21300000, guid: c84b55230b5e0e44e8a4af5736c81b06, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: ff21ae31455c8d940ad7b694f089918d, type: 3}
   price: 3750

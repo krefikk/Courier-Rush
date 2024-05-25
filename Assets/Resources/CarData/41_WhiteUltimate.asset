@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 41_WhiteUltimate
   m_EditorClassIdentifier: 
   carUniqueID: 40
-  carUISprite: {fileID: 21300000, guid: 5b3f4ceabf8d1f241bd849c1a83ea775, type: 3}
+  carUISprite: {fileID: 21300000, guid: 00aad9db69d1ac04fb7ea83d04155682, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: 5ee0aba3c8ff2b34ebf4f49e64bc4686, type: 3}
   price: 7750

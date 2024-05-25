@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 27_LamboYellow
   m_EditorClassIdentifier: 
   carUniqueID: 26
-  carUISprite: {fileID: 21300000, guid: 0ac38fa2b5a17f14daf0866a5b4b21e2, type: 3}
+  carUISprite: {fileID: 21300000, guid: 75e24c0e4494e1e49b9a066e7f374648, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: 64cd122d2e27bad4ab942b5bc7a20702, type: 3}
   price: 5350

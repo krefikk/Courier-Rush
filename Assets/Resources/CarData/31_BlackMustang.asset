@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 31_BlackMustang
   m_EditorClassIdentifier: 
   carUniqueID: 30
-  carUISprite: {fileID: 21300000, guid: 6073a668411b0c3458995636ee028b5a, type: 3}
+  carUISprite: {fileID: 21300000, guid: 39673205a12c9874787ce6a1cf60f7b4, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: 9de0357b17e124043955b7250fe4dfbe, type: 3}
   price: 5900

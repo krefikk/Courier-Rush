@@ -6,11 +6,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
-    bool hasSavedGame = false;
-    List<int> carIDs;
+    bool hasSavedGame = true;
+    List<int> carIDs = new List<int>{ 0 };
     CarData[] carDatas;
     int day = 1;
-    int money = 0;
+    int money = 10000;
     
     private void Awake()
     {
@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
         carDatas = Resources.LoadAll<CarData>("CarData/");
     }
 
-    private void Start()
+    private void Update()
     {
     }
 
@@ -38,18 +38,19 @@ public class GameManager : MonoBehaviour
     public CarData[] GetCars() 
     {
         int a = 0;
-        foreach (CarData car in carDatas) 
+        CarData[] ownedCarDatas = new CarData[carIDs.Count];
+        foreach (CarData car in carDatas)
         {
-            for (int i = 0; i < carIDs.Count; i++) 
+            for (int i = 0; i < carIDs.Count; i++)
             {
-                if (carIDs[i] == car.CarUniqueID) 
+                if (carIDs[i] == car.CarUniqueID)
                 {
-                    carDatas[a] = car;
+                    ownedCarDatas[a] = car;
                     a++;
                 }
             }
         }
-        return carDatas;
+        return ownedCarDatas;
     }
 
     public bool CheckForCar(int ID) 
@@ -71,4 +72,53 @@ public class GameManager : MonoBehaviour
     }
 
     public float GetMoney() { return money; }
+
+    public void DecreaseMoney(int amount) // Decreases money by given amount
+    {
+        StartCoroutine(DecreaseMoneyCO(amount));
+    }
+
+    IEnumerator DecreaseMoneyCO(int amount)
+    {
+        if (money < amount)
+        {
+            Debug.LogWarning("Money Error");
+            amount = money;
+        }
+
+        int targetMoney = money - amount;
+        int decrementStep = Mathf.Max(1, amount / 100); // Adjust the step based on the amount
+        float updateInterval = 0.01f; // Time interval between each decrement step
+
+        while (money > targetMoney)
+        {
+            money -= decrementStep;
+            if (money < targetMoney)
+            {
+                money = targetMoney; // Ensure the money doesn't go below the target
+            }
+            yield return new WaitForSeconds(updateInterval);
+        }
+    }
+    public void IncreaseMoney(int amount) // Increases money by given amount
+    {
+        StartCoroutine(IncreaseMoneyCO(amount));
+    }
+
+    IEnumerator IncreaseMoneyCO(int amount)
+    {
+        int targetMoney = money + amount;
+        int incrementStep = Mathf.Max(1, amount / 100); // Adjust the step based on the amount
+        float updateInterval = 0.01f; // Time interval between each decrement step
+
+        while (money > targetMoney)
+        {
+            money += incrementStep;
+            if (money > targetMoney)
+            {
+                money = targetMoney; // Ensure the money doesn't go below the target
+            }
+            yield return new WaitForSeconds(updateInterval);
+        }
+    }
 }

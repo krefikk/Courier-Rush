@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 14_GreenSedan
   m_EditorClassIdentifier: 
   carUniqueID: 13
-  carUISprite: {fileID: 21300000, guid: 2f0a02f934e220c4c8a4449dfab8ac7e, type: 3}
+  carUISprite: {fileID: 21300000, guid: 5fc43ebd7525e5a4798c1d06bb661a46, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: 907c825ed7d23974a9212dad2d27dcef, type: 3}
   price: 3000

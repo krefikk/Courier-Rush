@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 4_WhiteHatchBack
   m_EditorClassIdentifier: 
   carUniqueID: 3
-  carUISprite: {fileID: 21300000, guid: e1ef3575f17286a439beac94a5645d6e, type: 3}
+  carUISprite: {fileID: 21300000, guid: 508da2ae64c58e144a9e9bfdcbb6dce0, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: 9a3cfad13221f4c458436a3a4397bf48, type: 3}
   price: 1850

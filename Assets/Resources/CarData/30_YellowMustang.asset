@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 30_YellowMustang
   m_EditorClassIdentifier: 
   carUniqueID: 29
-  carUISprite: {fileID: 21300000, guid: 846c17640ca025c418aac99d155c798a, type: 3}
+  carUISprite: {fileID: 21300000, guid: 97f7c41b087d8ca43a714f852b09b440, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: 93f617209e769094c97003026cdd5a45, type: 3}
   price: 5725

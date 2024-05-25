@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 21_PorsheWhite
   m_EditorClassIdentifier: 
   carUniqueID: 20
-  carUISprite: {fileID: 21300000, guid: 6d20a2ae14572564dba9b62ca3041f33, type: 3}
+  carUISprite: {fileID: 21300000, guid: 683cb0f3068e1774ba12cec113a4e4e8, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: 4f5fbe04bfc50a944a2ad0abdea057a6, type: 3}
   price: 4250

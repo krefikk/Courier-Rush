@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 7_WhiteSedan1
   m_EditorClassIdentifier: 
   carUniqueID: 6
-  carUISprite: {fileID: 21300000, guid: 4da4d2858341b694ab6f318351e9595e, type: 3}
+  carUISprite: {fileID: 21300000, guid: a84a61ddad0ff604ea0c74eebfbc3e6d, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: 525fad40f98f8af4f903721c4c69b70d, type: 3}
   price: 2100

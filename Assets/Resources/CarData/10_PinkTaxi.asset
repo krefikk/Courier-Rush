@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 10_PinkTaxi
   m_EditorClassIdentifier: 
   carUniqueID: 9
-  carUISprite: {fileID: 21300000, guid: 7e4d6770b1619400b8813db82d792766, type: 3}
+  carUISprite: {fileID: 21300000, guid: 1aafbb0e3ac5c0342a5a77b6ae07839d, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: a5778f52c9a7725448c8b8a2364154cb, type: 3}
   price: 2600

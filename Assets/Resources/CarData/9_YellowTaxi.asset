@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 9_YellowTaxi
   m_EditorClassIdentifier: 
   carUniqueID: 8
-  carUISprite: {fileID: 21300000, guid: 1a215de517fda65438a2ea4b8a1c794e, type: 3}
+  carUISprite: {fileID: 21300000, guid: 8d7910abf84a2a24596633e334f52947, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: c67825d0d98a8414c8404ead5703ea82, type: 3}
   price: 2450

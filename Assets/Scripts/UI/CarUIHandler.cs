@@ -20,14 +20,33 @@ public class CarUIHandler : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
     }
 
-    public void SetUpCar(CarData carData, StatBar speed, StatBar acc, StatBar grip, StatBar dura) 
+    public void SetUpCar(CarData carData, StatBar speed, StatBar acc, StatBar grip, StatBar dura, Image firstCircle, Image secondCircle, Image thirdCircle) 
     {
         // Changing statistic bars
         Car car = carData.CarPrefab.GetComponent<Car>();
         speed.current = car.maxSpeedOnRealWorld;
         acc.current = car.accelerationFactor;
-        grip.current = 1 / car.antiGrip;
+        grip.current = 6 / car.antiGrip;
         dura.current = car.carHealth;
+        // Changing circles
+        if (car.maxPackage == 1)
+        {
+            firstCircle.color = Color.white;
+            secondCircle.color = Color.gray;
+            thirdCircle.color = Color.gray;
+        }
+        else if (car.maxPackage == 2)
+        {
+            firstCircle.color = Color.white;
+            secondCircle.color = Color.white;
+            thirdCircle.color = Color.gray;
+        }
+        else 
+        {
+            firstCircle.color = Color.white;
+            secondCircle.color = Color.white;
+            thirdCircle.color = Color.white;
+        }
         // Changing car sprite on screen
         carImage.sprite = carData.CarUISprite;
         // Setting the buy value on button

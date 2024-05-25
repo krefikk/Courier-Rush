@@ -18,10 +18,16 @@ public class SelectCarUIHandler : MonoBehaviour
     public GameObject gripStatBarObject;
     public GameObject durabilityStatBarObject;
     public GameObject accelerationStatBarObject;
+    public GameObject firstCircleObject;
+    public GameObject secondCircleObject;
+    public GameObject thirdCircleObject;
     StatBar speedBar;
     StatBar durabilityBar;
     StatBar gripBar;
     StatBar accelerationBar;
+    Image firstCircle;
+    Image secondCircle;
+    Image thirdCircle;
 
     bool changingCar = false; // Checks if car is changing at that moment
     CarUIHandler carUIHandler = null;
@@ -32,13 +38,18 @@ public class SelectCarUIHandler : MonoBehaviour
 
     void Start()
     {
-        // Load all car datas
+        // Loading all car datas and sorting them according to their IDs
         carDatas = Resources.LoadAll<CarData>("CarData/");
+        BubbleSort(carDatas);
         // Initialize statistic bars
         speedBar = speedStatBarObject.GetComponent<StatBar>();
         durabilityBar = durabilityStatBarObject.GetComponent<StatBar>();
         gripBar = gripStatBarObject.GetComponent<StatBar>();
         accelerationBar = accelerationStatBarObject.GetComponent<StatBar>();
+        // Initialize circle images
+        firstCircle = firstCircleObject.GetComponent<Image>();
+        secondCircle = secondCircleObject.GetComponent<Image>();
+        thirdCircle = thirdCircleObject.GetComponent<Image>();
         // Display first car
         StartCoroutine(SpawnCar(true));
     }
@@ -66,7 +77,7 @@ public class SelectCarUIHandler : MonoBehaviour
         // Create the new car prefab and play it's animation
         GameObject instatiatedCar = Instantiate(carPrefab, spawnOnTransform);
         carUIHandler = instatiatedCar.GetComponent<CarUIHandler>();
-        carUIHandler.SetUpCar(carDatas[selectedCarIndex], speedBar, accelerationBar, gripBar, durabilityBar);
+        carUIHandler.SetUpCar(carDatas[selectedCarIndex], speedBar, accelerationBar, gripBar, durabilityBar, firstCircle, secondCircle, thirdCircle);
         carUIHandler.StartCarEntranceAnimation(isCarAppearOnRightSide);
         yield return new WaitForSeconds(0.25f); // 0.25 is animation's required time to complete
         changingCar = false;
@@ -83,7 +94,7 @@ public class SelectCarUIHandler : MonoBehaviour
                 selectedCarIndex = carDatas.Length - 1;
             }
             // Spawn a new car from right
-            StartCoroutine(SpawnCar(true));
+            StartCoroutine(SpawnCar(false));
         }
     }
 
@@ -97,7 +108,7 @@ public class SelectCarUIHandler : MonoBehaviour
                 selectedCarIndex = 0;
             }
             // Spawn a new car from left
-            StartCoroutine(SpawnCar(false));
+            StartCoroutine(SpawnCar(true));
         }
     }
 
@@ -105,6 +116,8 @@ public class SelectCarUIHandler : MonoBehaviour
     {
         if (GameManager.gameManager.GetMoney() >= carDatas[selectedCarIndex].Price)
         {
+            GameManager.gameManager.DecreaseMoney(carDatas[selectedCarIndex].Price);
+            // Money decrease animation
             GameManager.gameManager.AddCar(carDatas[selectedCarIndex]);
             CheckCarWasBought();
         }
@@ -112,6 +125,11 @@ public class SelectCarUIHandler : MonoBehaviour
         { 
             // money hud'ýný titreþtir ve bir ses oynat
         }
+    }
+
+    public void OnClickGarage() 
+    {
+        SceneManager.LoadScene("Garage");
     }
 
     public void CheckCarWasBought() // Runs each time car on the screen changes
@@ -124,14 +142,32 @@ public class SelectCarUIHandler : MonoBehaviour
             if (GameManager.gameManager.CheckForCar(carDatas[selectedCarIndex].CarUniqueID))
             {
                 buyButtonValue.text = "In Garage";
+                buyButtonValue.fontSize = 30;
                 button.interactable = false;
             }
             else
             {
+                buyButtonValue.fontSize = 60;
                 button.interactable = true;
             }
         }      
     }
 
-    
+    void BubbleSort(CarData[] carDatas) // To sort cars according to their IDs
+    {
+        int n = carDatas.Length;
+        for (int i = 0; i < n - 1; i++) 
+        {
+            for (int j = 0; j < n - i - 1; j++) 
+            {
+                if (carDatas[j].CarUniqueID > carDatas[j + 1].CarUniqueID) 
+                {
+                    CarData temp = carDatas[j];
+                    carDatas[j] = carDatas[j + 1];
+                    carDatas[j + 1] = temp;
+                }
+            }
+        }
+    }
+
 }

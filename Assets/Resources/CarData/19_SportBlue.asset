@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 19_SportBlue
   m_EditorClassIdentifier: 
   carUniqueID: 18
-  carUISprite: {fileID: 21300000, guid: 466d644aecf382446b767819ab079d2b, type: 3}
+  carUISprite: {fileID: 21300000, guid: 2935b5b8bb8863d479ac541a2a834698, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: 201d4f7f6c7075846be564a4062ff2e7, type: 3}
   price: 4000

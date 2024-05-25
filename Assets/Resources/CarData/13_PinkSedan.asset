@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 13_PinkSedan
   m_EditorClassIdentifier: 
   carUniqueID: 12
-  carUISprite: {fileID: 21300000, guid: 021d2a12abcf9fe4a8a6d3ceedaefb52, type: 3}
+  carUISprite: {fileID: 21300000, guid: 39de53b90866fe749b64a96874070065, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: fe5f3d64ac40d3b4c823fe942b05f9a6, type: 3}
   price: 2900

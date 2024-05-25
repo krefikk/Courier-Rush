@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 28_GreenDodge
   m_EditorClassIdentifier: 
   carUniqueID: 27
-  carUISprite: {fileID: 21300000, guid: f618fd4e19a799440bfd83f2d213079f, type: 3}
+  carUISprite: {fileID: 21300000, guid: a5f3cfc40c7159441901d8a8b44adfd1, type: 3}
   carPrefab: {fileID: 3842953404081026869, guid: aaa0ba5279877d24ebdbf5b685154610, type: 3}
   price: 5500
