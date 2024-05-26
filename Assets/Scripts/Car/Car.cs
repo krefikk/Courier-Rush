@@ -24,11 +24,16 @@ public class Car : MonoBehaviour
     float velocityVsUp = 0;
     Rigidbody2D rb; // To reach car's RigidBody2D component from here
 
+    [Header("Scene Managers")]
+    InGameManager inGameManager;
+
     void Awake()
     {
         // Initializing RigidBody2D component of car
         rb = GetComponent<Rigidbody2D>();
         rb.mass = 3;
+        // Initializing in game manager
+        inGameManager = FindAnyObjectByType<InGameManager>();
     }
 
     private void Start()
@@ -201,6 +206,25 @@ public class Car : MonoBehaviour
             damage = 0;
         }
         carHealth -= damage;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("DropPoint")) 
+        {
+            foreach (Delivery delivery in inGameManager.deliveriesToDisplay) 
+            {
+                if (delivery.GetDropPoint() == collision.gameObject) 
+                {
+                    // Delivery sound
+                    delivery.SetAsDelivered();
+                }
+            }
+        }
+        if (collision.CompareTag("SpawnPoint")) 
+        {
+            inGameManager.OnArriveToShop();
+        }
     }
 
 }

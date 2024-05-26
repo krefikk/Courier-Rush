@@ -72,6 +72,8 @@ public class GameManager : MonoBehaviour
     }
 
     public float GetMoney() { return money; }
+    public int GetCurrentDay() { return day; }
+    public void IncreaseDay() { day += 1; } // Increases day by one
 
     public void DecreaseMoney(int amount) // Decreases money by given amount
     {
