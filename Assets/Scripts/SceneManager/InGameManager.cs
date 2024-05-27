@@ -31,14 +31,17 @@ public class InGameManager : MonoBehaviour
     public TextMeshProUGUI delivery1Distance;
     public TextMeshProUGUI delivery1Worth;
     public Button delivery1Choose;
+    public GameObject delivery1ChooseFill;
     public Button delivery1Cancel;
     public TextMeshProUGUI delivery2Distance;
     public TextMeshProUGUI delivery2Worth;
     public Button delivery2Choose;
+    public GameObject delivery2ChooseFill;
     public Button delivery2Cancel;
     public TextMeshProUGUI delivery3Distance;
     public TextMeshProUGUI delivery3Worth;
     public Button delivery3Choose;
+    public GameObject delivery3ChooseFill;
     public Button delivery3Cancel;
 
     private void Awake()
@@ -177,6 +180,20 @@ public class InGameManager : MonoBehaviour
         return indexList;
     }
 
+    public void HandleArrowPointersOnDelivery()
+    {
+        int index = 0;
+        foreach (Delivery delivery in deliveriesToDisplay)
+        {
+            if (delivery.IsDelivered())
+            {
+                arrowPointers[index].ChangeColorToGreen();
+                arrowPointers[index].SetTargetPoint(shop.transform.position);
+            }
+            index++;
+        }
+    }
+
     public void CheckInteractivityOfChooseButtons() 
     {
         if (!CanChooseNewDelivery())
@@ -212,7 +229,6 @@ public class InGameManager : MonoBehaviour
         }
         if (index == 0) 
         {
-            Debug.Log("Working");
             delivery1Choose.interactable = false;
             delivery1Cancel.interactable = false;
             delivery1.Play("toRight1");
@@ -223,6 +239,7 @@ public class InGameManager : MonoBehaviour
             delivery1Choose.interactable = true;
             delivery1Cancel.interactable = true;
             delivery1Cancel.gameObject.SetActive(false);
+            delivery1ChooseFill.SetActive(false);
             delivery1.Play("fromLeft1");
             yield return new WaitForSeconds(0.5f); // Wait for animation to finish
         }
@@ -238,6 +255,7 @@ public class InGameManager : MonoBehaviour
             delivery2Choose.interactable = true;
             delivery2Cancel.interactable = true;
             delivery2Cancel.gameObject.SetActive(false);
+            delivery2ChooseFill.SetActive(false);
             delivery2.Play("fromLeft2");
             yield return new WaitForSeconds(0.5f); // Wait for animation to finish
         }
@@ -253,6 +271,7 @@ public class InGameManager : MonoBehaviour
             delivery3Choose.interactable = true;
             delivery3Cancel.interactable = true;
             delivery3Cancel.gameObject.SetActive(false);
+            delivery3ChooseFill.SetActive(false);
             delivery3.Play("fromLeft3");
             yield return new WaitForSeconds(0.5f); // Wait for animation to finish
         }
@@ -270,10 +289,20 @@ public class InGameManager : MonoBehaviour
             deliveriesToDisplay[index].SetChosen();
             GameObject dropPoint = deliveriesToDisplay[index].GetDropPoint();
             dropPoint.transform.localScale = new Vector3(0.125f, 0.125f, 1);
-            dropPoint.AddComponent<SpriteRenderer>();
+            if (dropPoint.GetComponent<SpriteRenderer>() == null) 
+            {
+                dropPoint.AddComponent<SpriteRenderer>();
+            }
             SpriteRenderer dropPointSpriteLocal = dropPoint.GetComponent<SpriteRenderer>();
             dropPointSpriteLocal.sprite = dropPointSprite;
-            // Eðer eklenen sprite çok büyük olursa dropPoint'e mask de ekleyerek boxCollider dýþýnda kalan sprite'ýn gözükmesini engelle.
+            BoxCollider2D collider2D = dropPoint.GetComponent<BoxCollider2D>();
+            if (collider2D != null)
+            {
+                Destroy(collider2D);
+            }
+            collider2D = dropPoint.AddComponent<BoxCollider2D>();
+            collider2D.isTrigger = true;
+            Debug.Log("Is Trigger: " + collider2D.isTrigger);
             arrowPointers[index].SetTargetPoint(deliveriesToDisplay[index].GetDropPoint().transform.position);
         }
         else 
@@ -284,13 +313,15 @@ public class InGameManager : MonoBehaviour
 
     public void OnArriveToShop() 
     {
-        if (CheckForDeliveredPackages().Count != 0 || CheckForDeliveredPackages() != null) 
+        OpenDeliveriesTab();
+        if (CheckForDeliveredPackages() != null) 
         {
-            OpenDeliveriesTab();
             for (int i = 0; i < CheckForDeliveredPackages().Count; i++) 
             {
+                Debug.Log("Has to change delivery");
                 moneyGainedInDay += deliveriesToDisplay[CheckForDeliveredPackages()[i]].GetWorth();
                 OnChangeDelivery(CheckForDeliveredPackages()[i]);
+                Debug.Log("Money gained: " + moneyGainedInDay);
             }
             
         }

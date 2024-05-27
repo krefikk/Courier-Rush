@@ -94,6 +94,19 @@ public class ArrowPointer : MonoBehaviour
     {
         hasTargetPoint = false;
         gameObject.SetActive(hasTargetPoint);
+        ChangeColorToOrange();
+    }
+
+    public void ChangeColorToOrange() // 202 103 27
+    {
+        Image image = GetComponent<Image>();
+        image.color = new Color(202, 103, 27, 255);
+    }
+
+    public void ChangeColorToGreen() // 66 224 57
+    {
+        Image image = GetComponent<Image>();
+        image.color = Color.green;
     }
 
     public void DestroyArrow()
