@@ -49,10 +49,12 @@ public class Car : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Game loop for move related functions to display a smoother game
-        ApplyEngineForce();
-        KillOrthogonalVelocity();
-        ApplySteering();
+        if (!inGameManager.gamePaused)
+        { // Game loop for move related functions to display a smoother game
+            ApplyEngineForce();
+            KillOrthogonalVelocity();
+            ApplySteering();
+        } 
     }
 
     void ApplyEngineForce()
@@ -131,6 +133,18 @@ public class Car : MonoBehaviour
         SetInputVector(new Vector2(xAxis, yAxis));
         // Getting brake input
         braking = Input.GetKey(KeyCode.Space);
+        // Gettting pause input
+        if (Input.GetKeyDown(KeyCode.Escape)) 
+        {
+            if (inGameManager.gamePaused)
+            {
+                inGameManager.ClosePauseMenu();
+            }
+            else 
+            {
+                inGameManager.OpenPauseMenu();
+            }
+        }
     }
 
     float GetLateralVelocity()

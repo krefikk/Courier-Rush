@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Schema;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -10,7 +12,8 @@ public class InGameManager : MonoBehaviour
     float moneyGainedInDay = 0;
     public bool dayEnded = false;
     bool displayedDayEndedMenu = false;
-    bool gamePaused = false;
+    bool displayedLoseMenu = false;
+    public bool gamePaused = false;
     bool gameOver = false;
     public GameObject shop;
     public TextMeshProUGUI moneyText;
@@ -62,6 +65,21 @@ public class InGameManager : MonoBehaviour
     public TextMeshProUGUI shopsNeededMoney;
     public Button confirmButton;
 
+    // Lose Menu
+    public GameObject loseMenu;
+    Animator loseMenuAnim;
+    public TextMeshProUGUI totalDaysPlayedText;
+
+    // Pause Menu
+    public GameObject pauseMenu;
+    Animator pauseMenuAnim;
+    public GameObject pauseButton;
+    public AudioMixer audioMixer;
+    public Slider musicVolumeSlider;
+    public Slider SFXVolumeSlider;
+    public Slider carVolumeSlider;
+    public Toggle masterVolumeButton;
+
     private void Awake()
     {
         day = GameManager.gameManager.GetCurrentDay();
@@ -69,6 +87,8 @@ public class InGameManager : MonoBehaviour
         spawnPoint = GameObject.FindGameObjectWithTag("SpawnPoint");
         deliveriesTabAnim = deliveriesTab.GetComponent<Animator>();
         endGameMenuAnim = endGameMenu.GetComponent<Animator>();
+        loseMenuAnim = loseMenu.GetComponent<Animator>();
+        pauseMenuAnim = pauseMenu.GetComponent<Animator>();
         CreateNewDropPoint(0);
         CreateNewDropPoint(1);
         CreateNewDropPoint(2);
@@ -91,8 +111,12 @@ public class InGameManager : MonoBehaviour
     {
         if (gameOver) 
         {
-            GameManager.gameManager.DeleteSave();
-            // open game over menu
+            gamePaused = true;
+            if (!displayedLoseMenu) 
+            {
+                GameManager.gameManager.DeleteSave();
+                OpenLoseMenu();
+            }
         }
         if (dayEnded) 
         {
@@ -469,7 +493,59 @@ public class InGameManager : MonoBehaviour
     }
     IEnumerator OpenLoseMenuCO()
     {
-        yield return null;
+        displayedLoseMenu = true;
+        loseMenu.SetActive(true);
+        totalDaysPlayedText.text = "Total Days Played: " + (day + 1);
+        loseMenuAnim.Play("loseMenuEnter");
+        yield return new WaitForSeconds(0.25f);
+    }
+
+    IEnumerator OpenPauseMenuCO() 
+    {
+        gamePaused = true;
+        pauseMenu.SetActive(true);
+        float musicVolume;
+        float sfxVolume;
+        float carVolume;
+        float masterVolume;
+        if (audioMixer.GetFloat("Music", out musicVolume) && audioMixer.GetFloat("SFX", out sfxVolume) && audioMixer.GetFloat("Car", out carVolume) && audioMixer.GetFloat("Master", out masterVolume)) 
+        {
+            Image color = masterVolumeButton.GetComponentInChildren<Image>();
+            if (masterVolume <= -80)
+            {
+                masterVolumeButton.isOn = false;
+                color.color = Color.red;
+            }
+            else 
+            {
+                masterVolumeButton.isOn = true;
+                color.color = Color.green;
+            }
+            musicVolumeSlider.value = Mathf.InverseLerp(-60, 20, musicVolume);
+            SFXVolumeSlider.value = Mathf.InverseLerp(-60, 20, sfxVolume);
+            carVolumeSlider.value = Mathf.InverseLerp(-60, 20, carVolume);
+        }
+        pauseMenuAnim.Play("pauseMenuEnter");
+        yield return new WaitForSeconds(0.25f);
+    }
+
+    IEnumerator ClosePauseMenuCO()
+    {
+        gamePaused = false;
+        pauseMenuAnim.Play("pauseMenuExit");
+        yield return new WaitForSeconds(0.25f);
+        pauseMenu.SetActive(false);
+        pauseButton.SetActive(true);
+    }
+
+    public void OpenPauseMenu()
+    {
+        StartCoroutine(OpenPauseMenuCO());
+    }
+
+    public void ClosePauseMenu() 
+    {
+        StartCoroutine(ClosePauseMenuCO());
     }
 
     void CheckCarsDamage() 
@@ -483,5 +559,41 @@ public class InGameManager : MonoBehaviour
     public void IncreaseDeliveredPackageCount() 
     {
         packagesDeliveredInDay++;
+    }
+
+    public void OnMusicVolumeChange() 
+    {
+        audioMixer.SetFloat("Music", Mathf.Lerp(-60, 20, musicVolumeSlider.value));
+    }
+
+    public void OnSFXVolumeChange() 
+    {
+        audioMixer.SetFloat("SFX", Mathf.Lerp(-60, 20, SFXVolumeSlider.value));
+    }
+
+    public void OnCarVolumeChange()
+    {
+        audioMixer.SetFloat("Car", Mathf.Lerp(-60, 20, carVolumeSlider.value));
+    }
+
+    public void OnMasterVolumeButtonClick() 
+    {
+        Image color = masterVolumeButton.GetComponentInChildren<Image>();
+        if (masterVolumeButton.isOn)
+        {
+            audioMixer.SetFloat("Master", 10);
+            color.color = Color.green;
+        }
+        else 
+        {
+            audioMixer.SetFloat("Master", -80);
+            color.color = Color.red;
+        }
+        
+    }
+
+    public void ReturnToMainMenu() 
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
