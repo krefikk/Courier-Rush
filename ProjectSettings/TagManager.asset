@@ -15,6 +15,7 @@ TagManager:
   - DropPoint
   - Tree
   - InGameManager
+  - PackageDelivered
   layers:
   - Default
   - TransparentFX

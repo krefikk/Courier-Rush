@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class RadioManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class RadioManager : MonoBehaviour
     public Slider slider; 
     AudioClip currentSong;
     float elapsedTime;
+    float nameChangeTime = 0;
     int startingSongForChannel0;
     int startingSongForChannel1;
     int startingSongForChannel2;
@@ -74,6 +76,8 @@ public class RadioManager : MonoBehaviour
     private void Update()
     {
         elapsedTime += Time.deltaTime;
+        nameChangeTime += Time.deltaTime;
+        Debug.Log("Time: " + nameChangeTime);
         if (lastChannelNumber != currentChannelNumber)
         {
             StartCoroutine(OnChannelChangeCO());
@@ -85,6 +89,7 @@ public class RadioManager : MonoBehaviour
             AdvanceToNextTrack();
         }
         UpdateSlider();
+        UpdateRadioText();
     }
 
     IEnumerator SetupInitialMusic()
@@ -103,7 +108,6 @@ public class RadioManager : MonoBehaviour
         startingSongForChannel3 = Random.Range(0, channel4.Count);
 
         float endTime = Time.realtimeSinceStartup;
-        Debug.Log($"CacheStartMusics took {endTime - startTime} seconds");
     }
 
     void UpdateSlider() 
@@ -149,30 +153,33 @@ public class RadioManager : MonoBehaviour
 
     public void OnNextChannel()
     {
+        AudioManager.audioManager.PlayClickSound();
         currentChannelNumber = (currentChannelNumber + 1) % (channelCount + 1);
         StartCoroutine(OnChannelChangeCO());
     }
 
     public void OnPreviousChannel()
     {
+        AudioManager.audioManager.PlayClickSound();
         currentChannelNumber = (currentChannelNumber - 1 + channelCount + 1) % (channelCount + 1);
         StartCoroutine(OnChannelChangeCO());
     }
 
     IEnumerator OnChannelChangeCO()
     {
+        nameChangeTime = 0;
         yield return new WaitForEndOfFrame();
         currentChannelInfo = CalculateStartMusic();
         PlayCurrentChannel();
     }
 
     void DisplayCurrentMusic(RadioMusic radioMusic) 
-    {
+    {      
         if (radioMusic != null)
         {
-            artistName.text = radioMusic.Artist;
-            songName.text = radioMusic.Name;
+            ChangeTMProText(artistName, radioMusic.Artist);
             slider.value = radio.time / radioMusic.Seconds;
+            ChangeTMProText(songName, radioMusic.Name);
         }
         else 
         {
@@ -180,6 +187,75 @@ public class RadioManager : MonoBehaviour
             songName.text = "";
             slider.value = 1;
         }      
+    }
+
+    IEnumerator WaitForSeconds(float seconds) 
+    {
+        yield return new WaitForSeconds(seconds);
+    }
+
+    void UpdateRadioText() 
+    {
+        if (currentChannelInfo != null) 
+        {
+            RadioMusic radioMusic = null;
+            if (currentChannelInfo[0] < 0)
+            {
+                radioMusic = null;
+            }
+            else 
+            {
+                switch (currentChannelNumber)
+                {
+                    case 0:
+                        radioMusic = channel1[(int)currentChannelInfo[0]];
+                        break;
+                    case 1:
+                        radioMusic = channel2[(int)currentChannelInfo[0]];
+                        break;
+                    case 2:
+                        radioMusic = channel3[(int)currentChannelInfo[0]];
+                        break;
+                    case 3:
+                        radioMusic = channel4[(int)currentChannelInfo[0]];
+                        break;
+                    case 4:
+                        radioMusic = null;
+                        break;
+                }
+            }
+            if (nameChangeTime > 15 && radioMusic != null)
+            {
+                nameChangeTime = 0;
+                if (songName.text == radioMusic.Name)
+                {
+                    ChangeTMProText(songName, channelNames[currentChannelNumber]);
+                }
+                else
+                {
+                    ChangeTMProText(songName, radioMusic.Name);
+                }
+            }
+        }   
+    }
+
+    IEnumerator ChangeTMProTextCO(TextMeshProUGUI text, string newText)
+    {
+        for (int i = text.text.Length; i >= 0; i--)
+        {
+            text.text = text.text.Substring(0, i);
+            yield return new WaitForSeconds(0.01f);
+        }
+        for (int i = 0; i < newText.Length; i++)
+        {
+            text.text = newText.Substring(0, i + 1);
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
+    void ChangeTMProText(TextMeshProUGUI text, string newText) 
+    {
+        StartCoroutine(ChangeTMProTextCO(text, newText));
     }
 
     void PlayCurrentChannel()

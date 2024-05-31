@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     int day = 1;
     int money = 10000;
     int shopsNeed = 3000;
+
+    // SFX
+    public AudioSource clickSoundEffect;
     
     private void Awake()
     {
@@ -104,12 +107,12 @@ public class GameManager : MonoBehaviour
 
     IEnumerator DecreaseMoneyCO(int amount)
     {
+        AudioManager.audioManager.PlayMoneySound();
         if (money < amount)
         {
             Debug.LogWarning("Money Error");
             amount = money;
         }
-
         int targetMoney = money - amount;
         int decrementStep = Mathf.Max(1, amount / 100); // Adjust the step based on the amount
         float updateInterval = 0.01f; // Time interval between each decrement step
@@ -131,11 +134,12 @@ public class GameManager : MonoBehaviour
 
     IEnumerator IncreaseMoneyCO(int amount)
     {
+        AudioManager.audioManager.PlayMoneySound();
         int targetMoney = money + amount;
         int incrementStep = Mathf.Max(1, amount / 100); // Adjust the step based on the amount
         float updateInterval = 0.01f; // Time interval between each decrement step
 
-        while (money > targetMoney)
+        while (money < targetMoney)
         {
             money += incrementStep;
             if (money > targetMoney)

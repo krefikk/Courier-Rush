@@ -11,6 +11,7 @@ public class InGameManager : MonoBehaviour
 {
     float moneyGainedInDay = 0;
     public bool dayEnded = false;
+    float dayEndTime = 30; // 900
     bool displayedDayEndedMenu = false;
     bool displayedLoseMenu = false;
     public bool gamePaused = false;
@@ -79,6 +80,9 @@ public class InGameManager : MonoBehaviour
     public Slider SFXVolumeSlider;
     public Slider carVolumeSlider;
     public Toggle masterVolumeButton;
+
+    // Audio
+    public AudioSource packageDelivered;
 
     private void Awake()
     {
@@ -340,6 +344,7 @@ public class InGameManager : MonoBehaviour
     {
         if (CanChooseNewDelivery())
         {
+            AudioManager.audioManager.PlayClickSound();
             deliveriesToDisplay[index].SetChosen();
             GameObject dropPoint = deliveriesToDisplay[index].GetDropPoint();
             dropPoint.transform.localScale = new Vector3(0.125f, 0.125f, 1);
@@ -358,10 +363,6 @@ public class InGameManager : MonoBehaviour
             collider2D.isTrigger = true;
             Debug.Log("Is Trigger: " + collider2D.isTrigger);
             arrowPointers[index].SetTargetPoint(deliveriesToDisplay[index].GetDropPoint().transform.position);
-        }
-        else 
-        {
-            // müzik çal titreþtir zort falan
         }
     }
 
@@ -389,7 +390,7 @@ public class InGameManager : MonoBehaviour
             dayEnded = true;
             OnDayEnd();
         }
-        if (elapsedTime >= 900) 
+        if (elapsedTime >= dayEndTime) 
         {
             if (GetChosenDeliveryCount() == 0)
             {
@@ -399,7 +400,7 @@ public class InGameManager : MonoBehaviour
             }
             else 
             { // Giving player an extra 100 seconds for finish their last delivery
-                if (elapsedTime >= 1000)
+                if (elapsedTime >= dayEndTime + 100)
                 {
                     gamePaused = true;
                     dayEnded = true;
@@ -421,13 +422,15 @@ public class InGameManager : MonoBehaviour
 
     IEnumerator OpenDeliveriesTabCO() 
     {
+        AudioManager.audioManager.PlayDeliveryHUDSound();
         deliveriesTab.SetActive(true);
         deliveriesTabAnim.Play("deliveryEnter");
         yield return new WaitForSeconds(0.5f); // Wait for animation to end
     }
 
     IEnumerator CloseDeliveriesTabCO()
-    {       
+    {
+        AudioManager.audioManager.PlayDeliveryHUDSound();
         deliveriesTabAnim.Play("deliveryExit");
         yield return new WaitForSeconds(0.5f); // Wait for animation to end
         deliveriesTab.SetActive(false);
@@ -455,7 +458,8 @@ public class InGameManager : MonoBehaviour
             OpenLoseMenu();
             yield break;
         }
-        endGameTitle.text = "Day " + day + " ended.";
+        AudioManager.audioManager.PlayDayCompletedSound();
+        endGameTitle.text = "Day " + day + " Ended";
         endGameMenu.SetActive(true);
         shareSlider.value = 0.5f;
         packagesDeliveredText.text = "Packages Delivered: " + packagesDeliveredInDay;
@@ -479,11 +483,13 @@ public class InGameManager : MonoBehaviour
     {
         GameManager.gameManager.IncreaseMoney((int)(moneyGainedInDay * shareSlider.value));
         GameManager.gameManager.SetShopsNeed(GameManager.gameManager.GetShopsNeed() - (int)(moneyGainedInDay * (1 - shareSlider.value)));
+        DisplayMoney();
         endGameMenuAnim.Play("endGameExit");
         yield return new WaitForSeconds(0.25f);
         endGameMenu.SetActive(false);
         GameManager.gameManager.IncreaseDay();
         yield return new WaitForSeconds(0.5f);
+        GameManager.gameManager.SaveGame();
         SceneManager.LoadScene("Garage");
     }
 
@@ -493,6 +499,7 @@ public class InGameManager : MonoBehaviour
     }
     IEnumerator OpenLoseMenuCO()
     {
+        AudioManager.audioManager.PlayGameOverSound();
         displayedLoseMenu = true;
         loseMenu.SetActive(true);
         totalDaysPlayedText.text = "Total Days Played: " + (day + 1);
@@ -503,6 +510,7 @@ public class InGameManager : MonoBehaviour
     IEnumerator OpenPauseMenuCO() 
     {
         gamePaused = true;
+        AudioManager.audioManager.PlayDeliveryHUDSound();
         pauseMenu.SetActive(true);
         float musicVolume;
         float sfxVolume;
@@ -532,6 +540,7 @@ public class InGameManager : MonoBehaviour
     IEnumerator ClosePauseMenuCO()
     {
         gamePaused = false;
+        AudioManager.audioManager.PlayDeliveryHUDSound();
         pauseMenuAnim.Play("pauseMenuExit");
         yield return new WaitForSeconds(0.25f);
         pauseMenu.SetActive(false);
@@ -558,7 +567,8 @@ public class InGameManager : MonoBehaviour
 
     public void IncreaseDeliveredPackageCount() 
     {
-        packagesDeliveredInDay++;
+        packagesDeliveredInDay += 1;
+        packageDelivered.Play();
     }
 
     public void OnMusicVolumeChange() 
