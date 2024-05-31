@@ -117,7 +117,6 @@ public class SelectCarUIHandler : MonoBehaviour
         if (GameManager.gameManager.GetMoney() >= carDatas[selectedCarIndex].Price)
         {
             GameManager.gameManager.DecreaseMoney(carDatas[selectedCarIndex].Price);
-            // Money decrease animation
             GameManager.gameManager.AddCar(carDatas[selectedCarIndex]);
             CheckCarWasBought();
         }
