@@ -11,7 +11,6 @@ public class SpeedOMeter : MonoBehaviour
     public Transform rotatePoint;
     float maxSpeed = 220;
     float maxNeedleRotation = -270;
-    float deadZone = 5;
 
     private void Start()
     {

@@ -2,18 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class InGameManager : MonoBehaviour
 {
     float moneyGainedInDay = 0;
-    bool dayEnded = false;
+    public bool dayEnded = false;
+    bool displayedDayEndedMenu = false;
     bool gamePaused = false;
+    bool gameOver = false;
     public GameObject shop;
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI timeText;
     public Sprite dropPointSprite;
     int day;
+    int packagesDeliveredInDay = 0;
     GameObject[] dropPoints;
     public Delivery[] deliveriesToDisplay = new Delivery[3];
     public RectTransform CANVAS;
@@ -23,6 +27,8 @@ public class InGameManager : MonoBehaviour
     Car playerCar;
     GameObject spawnPoint;
     float elapsedTime = 0;
+
+    // Deliveries HUD
     public GameObject deliveriesTab;
     Animator deliveriesTabAnim;
     public Animator delivery1;
@@ -44,12 +50,25 @@ public class InGameManager : MonoBehaviour
     public GameObject delivery3ChooseFill;
     public Button delivery3Cancel;
 
+    // End Game Menus
+    public GameObject endGameMenu;
+    Animator endGameMenuAnim;
+    public TextMeshProUGUI endGameTitle;
+    public TextMeshProUGUI moneyGainedText;
+    public TextMeshProUGUI packagesDeliveredText;
+    public TextMeshProUGUI playersShare;
+    public TextMeshProUGUI shopsShare;
+    public Slider shareSlider;
+    public TextMeshProUGUI shopsNeededMoney;
+    public Button confirmButton;
+
     private void Awake()
     {
         day = GameManager.gameManager.GetCurrentDay();
         dropPoints = GameObject.FindGameObjectsWithTag("DropPoint");
         spawnPoint = GameObject.FindGameObjectWithTag("SpawnPoint");
         deliveriesTabAnim = deliveriesTab.GetComponent<Animator>();
+        endGameMenuAnim = endGameMenu.GetComponent<Animator>();
         CreateNewDropPoint(0);
         CreateNewDropPoint(1);
         CreateNewDropPoint(2);
@@ -70,14 +89,23 @@ public class InGameManager : MonoBehaviour
 
     private void Update()
     {
+        if (gameOver) 
+        {
+            GameManager.gameManager.DeleteSave();
+            // open game over menu
+        }
+        if (dayEnded) 
+        {
+            UpdateEndDayMenu();
+        }
         DisplayMoney();
         DisplayTime();
-        CheckInteractivityOfChooseButtons();       
-
+        CheckInteractivityOfChooseButtons();
         if (!gamePaused) 
         {
             KeepTime();
             FinishDay();
+            CheckCarsDamage();
         }
         if (Input.GetKeyDown(KeyCode.M)) 
         {
@@ -119,6 +147,8 @@ public class InGameManager : MonoBehaviour
         }
     }
 
+    
+
     //----------------------- Delivery System -----------------------------------
     void CreateNewDropPoint(int oldIndex) 
     { // Creates a new random drop point to old index
@@ -138,7 +168,7 @@ public class InGameManager : MonoBehaviour
 
     bool CanChooseNewDelivery() 
     {
-        if (playerCar.maxPackage >= GetChosenDeliveryCount())
+        if (playerCar.maxPackage > GetChosenDeliveryCount())
         {
             return true;
         }
@@ -329,13 +359,19 @@ public class InGameManager : MonoBehaviour
 
     public void FinishDay() 
     {
+        if (dayEnded) 
+        {
+            gamePaused = true;
+            dayEnded = true;
+            OnDayEnd();
+        }
         if (elapsedTime >= 900) 
         {
             if (GetChosenDeliveryCount() == 0)
             {
                 gamePaused = true;
                 dayEnded = true;
-                // Show score board
+                OnDayEnd();    
             }
             else 
             { // Giving player an extra 100 seconds for finish their last delivery
@@ -343,7 +379,7 @@ public class InGameManager : MonoBehaviour
                 {
                     gamePaused = true;
                     dayEnded = true;
-                    // Show score board
+                    OnDayEnd();
                 }
             }
         }
@@ -373,5 +409,79 @@ public class InGameManager : MonoBehaviour
         deliveriesTab.SetActive(false);
     }
 
+    void UpdateEndDayMenu() 
+    {
+        playersShare.text = ((int)(shareSlider.value * moneyGainedInDay)).ToString();
+        shopsShare.text = ((int)((1 - shareSlider.value) * moneyGainedInDay)).ToString();
+        if (GameManager.gameManager.GetShopsNeed() - ((int)((1 - shareSlider.value) * moneyGainedInDay)) >= 0) 
+        {
+            shopsNeededMoney.text = "Shop needs " + GameManager.gameManager.GetShopsNeed() + " coins by the end of the week to keep it afloat.";
+        }
+        else 
+        {
+            shopsNeededMoney.text = "the shop will make a profit of " + (((int)((1 - shareSlider.value) * moneyGainedInDay)) - GameManager.gameManager.GetShopsNeed()) + " coins.";
+        }      
+    }
 
+    IEnumerator OnDayEndCO() 
+    {
+        displayedDayEndedMenu = true;
+        if (day == 7 && moneyGainedInDay < GameManager.gameManager.GetShopsNeed()) 
+        {
+            OpenLoseMenu();
+            yield break;
+        }
+        endGameTitle.text = "Day " + day + " ended.";
+        endGameMenu.SetActive(true);
+        shareSlider.value = 0.5f;
+        packagesDeliveredText.text = "Packages Delivered: " + packagesDeliveredInDay;
+        moneyGainedText.text = "Money Gained: " + moneyGainedInDay;
+        endGameMenuAnim.Play("endGameEnter");
+        yield return new WaitForSeconds(0.25f);
+        
+    }
+
+    public void OnDayEnd() 
+    {
+        StartCoroutine(OnDayEndCO());
+    }
+
+    public void OnClickConfirm() 
+    {
+        StartCoroutine(OnClickConfirmCO());
+    }
+
+    IEnumerator OnClickConfirmCO() 
+    {
+        GameManager.gameManager.IncreaseMoney((int)(moneyGainedInDay * shareSlider.value));
+        GameManager.gameManager.SetShopsNeed(GameManager.gameManager.GetShopsNeed() - (int)(moneyGainedInDay * (1 - shareSlider.value)));
+        endGameMenuAnim.Play("endGameExit");
+        yield return new WaitForSeconds(0.25f);
+        endGameMenu.SetActive(false);
+        GameManager.gameManager.IncreaseDay();
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadScene("Garage");
+    }
+
+    public void OpenLoseMenu()
+    {
+        StartCoroutine(OpenLoseMenuCO());
+    }
+    IEnumerator OpenLoseMenuCO()
+    {
+        yield return null;
+    }
+
+    void CheckCarsDamage() 
+    {
+        if (playerCar.GetDamage() >= playerCar.GetMaxHealth())
+        {
+            dayEnded = true;
+        }
+    }
+
+    public void IncreaseDeliveredPackageCount() 
+    {
+        packagesDeliveredInDay++;
+    }
 }

@@ -6,14 +6,17 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
+    public static SaveHandler saveHandler;
     bool hasSavedGame = true;
     List<int> carIDs = new List<int>{ 0 };
     CarData[] carDatas;
     int day = 1;
     int money = 10000;
+    int shopsNeed = 3000;
     
     private void Awake()
     {
+        saveHandler = new SaveHandler(Application.persistentDataPath, "courierrushconfig.game");
         if (gameManager == null)
         {
             gameManager = this;
@@ -24,6 +27,18 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         carDatas = Resources.LoadAll<CarData>("CarData/");
+        GameData gameData = saveHandler.Load();
+        if (gameData == null)
+        { // Means there is no saved game
+            hasSavedGame = false;
+        }
+        else 
+        { // If there is a saved game, load the saved data
+            hasSavedGame = true;
+            carIDs = gameData.GetCarIDs();
+            day = gameData.GetDay();
+            money = gameData.GetMoney();
+        }
     }
 
     private void Update()
@@ -73,11 +88,18 @@ public class GameManager : MonoBehaviour
 
     public float GetMoney() { return money; }
     public int GetCurrentDay() { return day; }
+
+    public int GetShopsNeed() { return shopsNeed; }
     public void IncreaseDay() { day += 1; } // Increases day by one
 
     public void DecreaseMoney(int amount) // Decreases money by given amount
     {
         StartCoroutine(DecreaseMoneyCO(amount));
+    }
+
+    public void SetShopsNeed(int amount) 
+    {
+        shopsNeed = amount;
     }
 
     IEnumerator DecreaseMoneyCO(int amount)
@@ -122,5 +144,20 @@ public class GameManager : MonoBehaviour
             }
             yield return new WaitForSeconds(updateInterval);
         }
+    }
+
+    public void SaveGame() 
+    {
+        GameData gameData = new GameData(money, carIDs, day, shopsNeed);
+        saveHandler.Save(gameData);
+    }
+
+    public void DeleteSave() 
+    {
+        saveHandler.DeleteSaveFile();
+        money = 0;
+        day = 1;
+        carIDs = new List<int> { 0 };
+        hasSavedGame = false;
     }
 }

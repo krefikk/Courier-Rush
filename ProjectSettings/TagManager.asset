@@ -14,6 +14,7 @@ TagManager:
   - ConditionStatBar
   - DropPoint
   - Tree
+  - InGameManager
   layers:
   - Default
   - TransparentFX

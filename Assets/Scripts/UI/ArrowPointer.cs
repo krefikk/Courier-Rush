@@ -94,13 +94,13 @@ public class ArrowPointer : MonoBehaviour
     {
         hasTargetPoint = false;
         gameObject.SetActive(hasTargetPoint);
-        ChangeColorToOrange();
+        ChangeColorToCyan();
     }
 
-    public void ChangeColorToOrange() // 202 103 27
+    public void ChangeColorToCyan()
     {
         Image image = GetComponent<Image>();
-        image.color = new Color(202, 103, 27, 255);
+        image.color = Color.cyan;
     }
 
     public void ChangeColorToGreen() // 66 224 57

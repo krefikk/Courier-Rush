@@ -219,6 +219,7 @@ public class Car : MonoBehaviour
                     // Delivery sound
                     delivery.SetAsDelivered();
                     inGameManager.HandleArrowPointersOnDelivery(); // For changing the color and direction of arrow pointer on delivery
+                    inGameManager.IncreaseDeliveredPackageCount();
                 }
             }
         }
