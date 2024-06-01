@@ -16,6 +16,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource dayCompletedSoundEffect;
     public AudioSource moneySoundEffect;
     public AudioSource deliveryHUDSoundEffect;
+    public AudioSource errorSoundEffect;
 
     private void Awake()
     {
@@ -68,5 +69,10 @@ public class AudioManager : MonoBehaviour
     public void PlayDeliveryHUDSound() 
     {
         deliveryHUDSoundEffect.Play();
+    }
+
+    public void PlayErrorSound() 
+    {
+        errorSoundEffect.Play();
     }
 }

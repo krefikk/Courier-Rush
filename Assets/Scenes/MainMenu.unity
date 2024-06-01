@@ -1349,7 +1349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c07d1ba708db56140adb00a22f300b35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickSoundEffect: {fileID: 0}
 --- !u!1 &1387922872
 GameObject:
   m_ObjectHideFlags: 0
@@ -3159,10 +3158,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
-    - target: {fileID: 9220048337483387456, guid: b7c1270368dd3dd4eb1ee16ae6c20adb, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 625cc25b79496d54eb087098c95a8de4, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

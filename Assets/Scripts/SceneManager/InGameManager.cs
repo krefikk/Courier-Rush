@@ -11,11 +11,12 @@ public class InGameManager : MonoBehaviour
 {
     float moneyGainedInDay = 0;
     public bool dayEnded = false;
-    float dayEndTime = 30; // 900
+    float dayEndTime = 900;
     bool displayedDayEndedMenu = false;
     bool displayedLoseMenu = false;
     public bool gamePaused = false;
     bool gameOver = false;
+    bool carDamaged = false;
     public GameObject shop;
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI timeText;
@@ -122,10 +123,6 @@ public class InGameManager : MonoBehaviour
                 OpenLoseMenu();
             }
         }
-        if (dayEnded) 
-        {
-            UpdateEndDayMenu();
-        }
         DisplayMoney();
         DisplayTime();
         CheckInteractivityOfChooseButtons();
@@ -134,6 +131,10 @@ public class InGameManager : MonoBehaviour
             KeepTime();
             FinishDay();
             CheckCarsDamage();
+        }
+        if (dayEnded)
+        {
+            UpdateEndDayMenu();
         }
         if (Input.GetKeyDown(KeyCode.M)) 
         {
@@ -386,6 +387,7 @@ public class InGameManager : MonoBehaviour
     {
         if (dayEnded) 
         {
+            elapsedTime = 0;
             gamePaused = true;
             dayEnded = true;
             OnDayEnd();
@@ -394,17 +396,13 @@ public class InGameManager : MonoBehaviour
         {
             if (GetChosenDeliveryCount() == 0)
             {
-                gamePaused = true;
                 dayEnded = true;
-                OnDayEnd();    
             }
             else 
             { // Giving player an extra 100 seconds for finish their last delivery
                 if (elapsedTime >= dayEndTime + 100)
                 {
-                    gamePaused = true;
                     dayEnded = true;
-                    OnDayEnd();
                 }
             }
         }
@@ -460,6 +458,7 @@ public class InGameManager : MonoBehaviour
         }
         AudioManager.audioManager.PlayDayCompletedSound();
         endGameTitle.text = "Day " + day + " Ended";
+        if (carDamaged) { endGameTitle.text = "Car Broke Down"; }
         endGameMenu.SetActive(true);
         shareSlider.value = 0.5f;
         packagesDeliveredText.text = "Packages Delivered: " + packagesDeliveredInDay;
@@ -562,6 +561,7 @@ public class InGameManager : MonoBehaviour
         if (playerCar.GetDamage() >= playerCar.GetMaxHealth())
         {
             dayEnded = true;
+            carDamaged = true;
         }
     }
 

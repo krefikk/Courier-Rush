@@ -196,6 +196,11 @@ public class Car : MonoBehaviour
         return carHealth;
     }
 
+    public void FixCurrentHealth() 
+    {
+        carHealth = maxCarHealth;
+    }
+
     public float GetMaxHealth()
     {
         return maxCarHealth;

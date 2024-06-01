@@ -7,11 +7,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
     public static SaveHandler saveHandler;
-    bool hasSavedGame = true;
+    bool hasSavedGame = false;
     List<int> carIDs = new List<int>{ 0 };
     CarData[] carDatas;
     int day = 1;
-    int money = 10000;
+    int money = 0;
     int shopsNeed = 7500;
     
     private void Awake()

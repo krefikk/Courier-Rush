@@ -86,6 +86,7 @@ public class SelectCarUIHandler : MonoBehaviour
 
     public void OnClickedLeftArrow() 
     {
+        AudioManager.audioManager.PlayClickSound();
         if (!changingCar) 
         {
             selectedCarIndex--;
@@ -100,6 +101,7 @@ public class SelectCarUIHandler : MonoBehaviour
 
     public void OnClickedRightArrow() 
     {
+        AudioManager.audioManager.PlayClickSound();
         if (!changingCar) 
         {
             selectedCarIndex++;
@@ -121,13 +123,14 @@ public class SelectCarUIHandler : MonoBehaviour
             CheckCarWasBought();
         }
         else 
-        { 
-            // money hud'ýný titreþtir ve bir ses oynat
+        {
+            AudioManager.audioManager.PlayErrorSound();
         }
     }
 
     public void OnClickGarage() 
     {
+        AudioManager.audioManager.PlayClickSound();
         SceneManager.LoadScene("Garage");
     }
 

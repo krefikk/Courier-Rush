@@ -35,8 +35,8 @@ public class RadioManager : MonoBehaviour
         allMusics = Resources.LoadAll<RadioMusic>("Music/");
         channelNames.Add(0, "Queen Pop");
         channelNames.Add(1, "Police Radio");
-        channelNames.Add(2, "SEK Channel");
-        channelNames.Add(3, "91.7");
+        channelNames.Add(2, "SEK FM");
+        channelNames.Add(3, "91.7 FM");
         channelNames.Add(4, "No Signal");
         // Placing musics to list according to their channel numbers
         foreach (RadioMusic music in allMusics)
@@ -67,7 +67,7 @@ public class RadioManager : MonoBehaviour
         lastChannelNumber = currentChannelNumber;
         currentSong = null;
         artistName.text = "";
-        songName.text = "";
+        songName.text = "No Signal";
         slider.value = 1;
         CacheStartMusics();
         StartCoroutine(SetupInitialMusic());
@@ -77,7 +77,6 @@ public class RadioManager : MonoBehaviour
     {
         elapsedTime += Time.deltaTime;
         nameChangeTime += Time.deltaTime;
-        Debug.Log("Time: " + nameChangeTime);
         if (lastChannelNumber != currentChannelNumber)
         {
             StartCoroutine(OnChannelChangeCO());
@@ -184,7 +183,7 @@ public class RadioManager : MonoBehaviour
         else 
         {
             artistName.text = "";
-            songName.text = "";
+            songName.text = "No Signal";
             slider.value = 1;
         }      
     }

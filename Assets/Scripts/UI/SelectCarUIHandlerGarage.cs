@@ -89,6 +89,7 @@ public class SelectCarUIHandlerGarage : MonoBehaviour
 
     public void OnClickedLeftArrow()
     {
+        AudioManager.audioManager.PlayClickSound();
         if (!changingCar)
         {
             selectedCarIndex--;
@@ -103,6 +104,7 @@ public class SelectCarUIHandlerGarage : MonoBehaviour
 
     public void OnClickedRightArrow()
     {
+        AudioManager.audioManager.PlayClickSound();
         if (!changingCar)
         {
             selectedCarIndex++;
@@ -124,6 +126,7 @@ public class SelectCarUIHandlerGarage : MonoBehaviour
 
     public void OnClickShop()
     {
+        AudioManager.audioManager.PlayClickSound();
         SceneManager.LoadScene("Shop");
     }
 
