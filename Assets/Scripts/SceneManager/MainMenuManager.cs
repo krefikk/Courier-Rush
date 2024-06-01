@@ -246,6 +246,7 @@ public class MainMenuManager : MonoBehaviour
 
     IEnumerator SaveContinue()
     {
+        GameManager.gameManager.ResetToDefault();
         saveContinue.interactable = false;
         saveCancel.interactable = false;
         saveWarningAnim.Play("saveExit");
@@ -259,7 +260,6 @@ public class MainMenuManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         saveWarning.SetActive(false);
         StartCoroutine(ExitAnimation());
-        // Delete the save files and create new
         SceneManager.LoadScene("Garage");
     }
 }

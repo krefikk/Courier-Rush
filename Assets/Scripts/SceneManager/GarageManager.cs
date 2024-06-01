@@ -19,4 +19,10 @@ public class GarageManager : MonoBehaviour
         int money = (int) GameManager.gameManager.GetMoney();
         moneyText.text = money.ToString();
     }
+
+    public void ReturnToMainMenu() 
+    {
+        GameManager.gameManager.CheckSavedGame();
+        SceneManager.LoadScene("MainMenu");
+    }
 }

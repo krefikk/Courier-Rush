@@ -12,14 +12,11 @@ public class GameManager : MonoBehaviour
     CarData[] carDatas;
     int day = 1;
     int money = 10000;
-    int shopsNeed = 3000;
-
-    // SFX
-    public AudioSource clickSoundEffect;
+    int shopsNeed = 7500;
     
     private void Awake()
     {
-        saveHandler = new SaveHandler(Application.persistentDataPath, "courierrushconfig.game");
+        saveHandler = new SaveHandler(Application.persistentDataPath, "courierrush.game");
         if (gameManager == null)
         {
             gameManager = this;
@@ -41,6 +38,7 @@ public class GameManager : MonoBehaviour
             carIDs = gameData.GetCarIDs();
             day = gameData.GetDay();
             money = gameData.GetMoney();
+            shopsNeed = gameData.GetShopsNeed();
         }
     }
 
@@ -56,6 +54,7 @@ public class GameManager : MonoBehaviour
     public CarData[] GetCars() 
     {
         int a = 0;
+        Debug.Log("Element count: " +carIDs.Count);
         CarData[] ownedCarDatas = new CarData[carIDs.Count];
         foreach (CarData car in carDatas)
         {
@@ -163,5 +162,30 @@ public class GameManager : MonoBehaviour
         day = 1;
         carIDs = new List<int> { 0 };
         hasSavedGame = false;
+    }
+
+    public void CheckSavedGame() 
+    {
+        GameData gameData = saveHandler.Load();
+        if (gameData == null)
+        { // Means there is no saved game
+            hasSavedGame = false;
+        }
+        else
+        { // If there is a saved game, load the saved data
+            hasSavedGame = true;
+            carIDs = gameData.GetCarIDs();
+            day = gameData.GetDay();
+            money = gameData.GetMoney();
+        }
+    }
+
+    public void ResetToDefault() 
+    {
+        hasSavedGame = false;
+        money = 0;
+        day = 1;
+        carIDs = new List<int> { 0 };
+        shopsNeed = 7500;
     }
 }

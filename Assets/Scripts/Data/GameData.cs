@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class GameData
 {
-    private int money = 0;
-    List<int> carIDs = new List<int>();
-    int day = 1;
-    int shopsNeed = 3000;
+    public int money = 0;
+    public List<int> carIDs = new List<int>();
+    public int day = 1;
+    public int shopsNeed = 3000;
 
     public GameData(int money, List<int> carIDs, int day, int shopsNeed)
     {
@@ -26,5 +26,11 @@ public class GameData
     public void SetDay(int day) {  this.day = day; }
     public void SetCarIDs(List<int> carIDs) {  this.carIDs = carIDs; }
     public void SetShopsNeed(int shopsNeed) {  this.shopsNeed = shopsNeed;}
+
+    public override string ToString()
+    {
+        string str = "Money: " + money + ", Day: " + day + ", Shops Needed Money: " + shopsNeed + ", Car Count: " + carIDs.Count;
+        return str;
+    }
 
 }

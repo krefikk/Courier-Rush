@@ -9,6 +9,7 @@ public class SaveHandler
     private string saveFilePath;
     private string saveFileName;
     private string encryptionCodeWord = "courier";
+    private bool encryption = true;
 
     public SaveHandler(string saveFilePath, string saveFileName) 
     {
@@ -29,7 +30,7 @@ public class SaveHandler
                 {
                     using (StreamReader reader = new StreamReader(fileStream)) { loadStore = reader.ReadToEnd(); }
                 }
-                loadStore = EncryptDecrypt(loadStore);
+                if (encryption) { loadStore = EncryptDecrypt(loadStore); }
                 loadedData = JsonUtility.FromJson<GameData>(loadStore);
             }
             catch (Exception e)
@@ -42,12 +43,13 @@ public class SaveHandler
 
     public void Save(GameData data) 
     {
+        // Used Path.Combine instead of saveFilePath + "/" + saveFileName because other OS's may have different syntaxs than Windows' syntax
         string fullPath = Path.Combine(saveFilePath, saveFileName);
         try
         {
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
             string saveStore = JsonUtility.ToJson(data, true);
-            saveStore = EncryptDecrypt(saveStore);
+            if (encryption) { saveStore = EncryptDecrypt(saveStore); }
             using (FileStream fileStream = new FileStream(fullPath, FileMode.Create)) 
             {
                 using (StreamWriter writer = new StreamWriter(fileStream)) { writer.Write(saveStore); }
