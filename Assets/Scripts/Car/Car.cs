@@ -130,6 +130,10 @@ public class Car : MonoBehaviour
         // Getting move inputs
         float xAxis = Input.GetAxis("Horizontal");
         float yAxis = Input.GetAxis("Vertical");
+        if (velocityVsUp < 0) 
+        { // Inverting horizontal output if car is moving backwards
+            xAxis = -1 * xAxis;
+        }
         SetInputVector(new Vector2(xAxis, yAxis));
         // Getting brake input
         braking = Input.GetKey(KeyCode.Space);
