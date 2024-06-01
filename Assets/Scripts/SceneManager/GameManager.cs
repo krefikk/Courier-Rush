@@ -170,6 +170,7 @@ public class GameManager : MonoBehaviour
         if (gameData == null)
         { // Means there is no saved game
             hasSavedGame = false;
+            ResetToDefault();
         }
         else
         { // If there is a saved game, load the saved data

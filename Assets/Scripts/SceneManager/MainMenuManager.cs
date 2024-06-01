@@ -176,7 +176,7 @@ public class MainMenuManager : MonoBehaviour
     public void OnClickCredits() 
     {
         StartCoroutine(ExitAnimation());
-        SceneManager.LoadScene("Credits");
+        Application.OpenURL("https://docs.google.com/document/d/159fUU6jc3Kclw-6DefTySJx0fknF3dEoJkVL04dS1Hs/edit");
     }
 
     public void OnClickHTP() 
